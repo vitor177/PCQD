@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from total_dados_entrada import total_dados_entrada
+from utils import encontrar_indices
 
 arquivo = 'data/SPES01-2024-07.xlsx'
 
@@ -37,7 +38,17 @@ vetor_minusculo = [str(valor).lower() for valor in vetor if isinstance(valor, st
 print(vetor_minusculo)
 # %%
 vetor_completo = pd.DataFrame()
+vetor_completo
 
 
 # %%
+# %%
+col_temp = ["Temp_avg","Temp_max", "Temp_min", "Temp_std"]
+
+
+temp = encontrar_indices(col_temp, finais)
+temp
+# %%
+for i, item in enumerate(finais):
+    print(i, item)
 # %%
