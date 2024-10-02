@@ -8,6 +8,7 @@ from total_dados_entrada import total_dados_entrada
 from utils import encontrar_indices
 from total_localizador import total_localizador
 from total_varrad import total_varrad
+from total_cqd_rad import total_cqd_rad
 
 # Informações de entrada
 arquivo = 'data/SPES01-2024-07.xlsx'
@@ -44,3 +45,9 @@ dados = total_varrad(raw_rad, dia_juliano_ref, latitude, longitude, longitude_re
 
 # %%
 # Controle de qualidade de Rados Radiométricos
+
+# [Estatistico_RAD,RAD_XLSXplot,Flags_RAD,Pot_RAD_xlsx,Energia_RAD_xlsx] = 
+# TOTAL_CQD_RAD(RAW_RAD,RAW_MET,DADOS,GHI1,GHI2,GHI3,POA,GRI1,GRI2,DHI,BNI,Clear_sky,mes,dia_final,ano,Nome_Arquivo,ES);
+estatistico_rad, rad_xlsxplot, flags = total_cqd_rad()
+
+# %%
