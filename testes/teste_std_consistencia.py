@@ -70,7 +70,7 @@ def teste_std_consistencia(var_ant, var_avg, var_max, var_min, var_std, n):
                 consistencia_flag3 += 1
 
 
-    
+    z=1
 
     x = np.full((n,2), np.nan)
     x[:, 0] = desv_pad_0
