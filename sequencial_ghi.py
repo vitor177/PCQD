@@ -1,3 +1,5 @@
+import numpy as np
+
 def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, ghi1_avg_p, titulo, nome_var, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
     n, m = raw.shape
 
@@ -16,6 +18,7 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, ghi1_avg_p, t
     if clear_sky:
         clear_sky_avg = raw.iloc[:, clear_sky[0]]
 
+    # Informações da varRad
     horalocal = dados.iloc[:,1]
     dia_mes = dados.iloc[:,2]
     cosAZS = dados.iloc[:,13]
@@ -41,5 +44,19 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, ghi1_avg_p, t
             ghi1_flag6 += 1
         else:
             ghi1_flag1 += 1    
+
+    m1 = np.full(n, np.nan)
+    m1 = var_avg
+    n1 = np.full(6, np.nan)
+    n1[0] = ghi1_flag1
+    n1[1] = 0
+    n1[2] = 0
+    n1[3] = 0
+    n1[4] = 0
+    n1[5] = ghi1_flag6
+
+    # Nome
+
+
 
     pass
