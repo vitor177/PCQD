@@ -71,8 +71,8 @@ def teste_bsrn(var_ant, var, fpmin, fpmax, ermin, ermax, n):
 
     # Resultados X e Y
     x = np.full((n, 2), np.nan)
-    x[:, 0] = fp[:, 0]
-    x[:, 1] = er[:, 0]
+    x[:, 0] = fp
+    x[:, 1] = er
 
     y = np.full((6, 2), np.nan)
     y[0, 0] = fp_flag1
