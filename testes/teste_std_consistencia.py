@@ -76,7 +76,7 @@ def teste_std_consistencia(var_ant, var_avg, var_max, var_min, var_std, n):
     x[:, 0] = desv_pad_0
     x[:, 1] = consistencia
 
-    y = np.full((n,2), np.nan)
+    y = np.full((6,2), np.nan)
     y[0, 0] = desv_pad_0_flag1
     y[1, 0] = desv_pad_0_flag2
     y[2, 0] = desv_pad_0_flag3

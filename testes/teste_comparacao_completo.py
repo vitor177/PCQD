@@ -17,9 +17,9 @@ def teste_comparacao_completo(var_ant, ghi, dhi, bni, cos_azs, azs, sky, n):
 
     for i in range(n):
         dhi_bhi[i] = dhi[i] + (bni[i] * cos_azs[i])
-        ghi_dhi_bni[i] = ghi[i] / dhi_bhi[i]
+        ghi_dhi_bni[i] = ghi[i] / dhi_bhi[i] if dhi_bhi[i] != 0 else 0
         bni_cosz[i] = bni[i] * cos_azs[i]
-        dhi_ghi[i] = dhi[i] / ghi[i]
+        dhi_ghi[i] = dhi[i] / ghi[i] if ghi[i] != 0 else 0 
 
     # Comparação GHI
     comp_ghi = np.full(n, np.nan)
