@@ -1,14 +1,15 @@
 import pandas as pd
 import numpy as np
 from sequencial_ghi import sequencial_ghi
-
+from sequencial_dhi import sequencial_dhi
 def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es):
     data = raw_rad.iloc[:, 0].to_numpy()
-
 
     start_row = 1440-20
 
     ghi1_avg = raw_rad.iloc[:, ghi1[0]]
+
+    print(ghi1_avg)
     ghi1_max = raw_rad.iloc[:, ghi1[1]]
     ghi1_min = raw_rad.iloc[:, ghi1[2]]
     ghi1_std = raw_rad.iloc[:, ghi1[3]]
@@ -91,11 +92,17 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
 # [GHI_Over] = TOTAL_Over_Irradiance(RAW_RAD,DADOS,GHI1,Clear_sky,dia_final,mes,ano,'Overirradiance Events - GHI ','GHI',Nome_Arquivo);
 # end
 
+
     # TO AQUI
+
+    # is empty ghi2
     if not ghi2:
-# [GHI_M1,GHI_N1,GHI_Nome,GHI_XLSX,Flags_GHI,Estatistico_GHI,Pot_GHI_xlsx,Energia_GHI_xlsx] = Sequencial_GHI(RAW_RAD,DADOS,GHI1_avg,GHI1_max,GHI1_min,GHI1_std,GHI1_avg_p,'Global Horizontal Irradiance ','GHI',GHI2,GHI3,POA,DHI,BNI,Clear_sky,mes,dia_final,ano,Nome_Arquivo);
-    #ghi_m1, ghi_n1, ghi_nome, ghi_xlsx, flags_ghi, estatistico_ghi, pot_ghi_xlsx, energia_ghi_xlsx = 
-        sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        
+        #sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        pass
+    if dhi:
+        print("VOU TER QUE FAZER ESSA LATA")
+
+        sequencial_dhi(raw_rad, dados, dhi_avg, dhi_max, dhi_min, dhi_std, dhi_avg_p, 'Diffuse Horizontal Irradiance ', 'DHI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+   
 
     return 

@@ -59,6 +59,9 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
             aux[i, 1] = 'Flag1'
 
     xlsx = pd.DataFrame(aux)
+
+    print(xlsx)
+
     # Salvar XLSX (descomente a linha abaixo se quiser salvar como Excel)
     # xlsx.to_excel('Resultado.xlsx', index=False, header=False)
 
@@ -83,6 +86,7 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
     auxx = [nome_var, '%']
     estatistico = np.row_stack([auxx, estatistico])
 
+
     # Salvar estatístico (descomente a linha abaixo se quiser salvar como Excel)
     # pd.DataFrame(estatistico).to_excel(f'Estatistico_{nome_var}.xlsx', index=False, header=False)
 
@@ -97,5 +101,8 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
 
     # Salvar N1 (descomente a linha abaixo se quiser salvar como Excel)
     # pd.DataFrame(n1).to_excel(f'Flags_{nome_var}.xlsx', index=False, header=False)
+
+
+
 
     return x, y, n1, estatistico, xlsx

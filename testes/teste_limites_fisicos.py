@@ -34,7 +34,7 @@ def teste_limites_fisicos(var, var_ant, lims, limi, n):
             lf[i] = flag2
             lf_flag2 += 1
         else:
-            if limi < var_ant[i] < lims:
+            if limi > var_ant[i] and var_ant[i] > lims: 
                 lf[i] = flag3
                 lf_flag3 += 1
                 flag3x[i] = var[i]
