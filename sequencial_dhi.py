@@ -14,6 +14,7 @@ from testes.teste_persistencia import teste_persistencia
 from resultado_var import resultado_var
 from potencial_var import potencial_var
 from energia_var import energia_var
+from testes.teste_kd_dhi import teste_kd_dhi
 import numpy as np
 
 def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
@@ -96,5 +97,19 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     #print(f"Teste aplicado Fisicamente Possível: lf_ghi1: {lf_ghi1} e {lf_ghi_flag}")
     bsrn_dhi, bsnr_dhi_flag = teste_bsrn(lf_dhi, var_avg, fpmin, fpmaxdhi, ermin, ermaxdhi, n)
     #print(pd.DataFrame(n1.astype(int)))
-    print(pd.DataFrame(bsnr_dhi_flag.astype(int)))
 
+# [Elevacao_DHI,Elevacao_DHI_Flag] = TESTE_angulo_elevacao(BSRN_DHI(:,2),alpha,n);
+# M1 = [M1,Elevacao_DHI];
+# N1 = [N1,Elevacao_DHI_Flag];
+# Nome = [Nome,{'Ângulo de elevacao'}];
+
+    elevacao_dhi, elevaco_dhi_flag = teste_angulo_elevacao(bsrn_dhi[:,1], alpha, n)
+
+
+#     [kd_DHI,kd_DHI_Flag] = TESTE_kd_DHI(Elevacao_DHI,DHI_avg,GHI1_avg,Iox,n);
+# M1 = [M1,kd_DHI(:,2)];
+# N1 = [N1,kd_DHI_Flag(:,2)];
+# Nome = [Nome,{'Índice de transmissividade'}];
+    kd_dhi, kd_dhi_flag = teste_kd_dhi(elevacao_dhi, dhi_avg, ghi1_avg, iox, n) 
+
+    print(pd.DataFrame(kd_dhi_flag.astype(int)))
