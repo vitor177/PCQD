@@ -15,10 +15,11 @@ from resultado_var import resultado_var
 from potencial_var import potencial_var
 from energia_var import energia_var
 from testes.teste_kd_dhi import teste_kd_dhi
+from testes.teste_tracker_off import teste_tracker_off
 import numpy as np
 
 def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
-    
+    print("ANTES DE TUDO: ", clear_sky)
     # Informações dos dados brutos
     n, m = raw.shape
 
@@ -37,7 +38,7 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     if bni:
         bni_avg = raw.iloc[:, bni[0]]
     if clear_sky:
-        clear_sky_dhi = raw.iloc[:, clear_sky[0]]
+        clear_sky_dhi = raw.iloc[:, clear_sky[2]]
 
 
     # Informações da varRad
@@ -112,4 +113,61 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # Nome = [Nome,{'Índice de transmissividade'}];
     kd_dhi, kd_dhi_flag = teste_kd_dhi(elevacao_dhi, dhi_avg, ghi1_avg, iox, n) 
 
-    print(pd.DataFrame(kd_dhi_flag.astype(int)))
+
+
+#     [std_Consistencia,std_Consistencia_flag] = TESTE_std_Consistencia(kd_DHI,Var_avg,Var_max,Var_min,Var_std,n);
+# M1 = [M1,std_Consistencia];
+# N1 = [N1,std_Consistencia_flag];
+# Nome = [Nome,{'Desvio padrão nulo'},{'Consistência de parêmetros'}];
+
+    std_consistencia, std_consistencia_flag = teste_std_consistencia(kd_dhi, var_avg, var_max, var_min, var_std, n)
+
+    #print(pd.DataFrame(std_consistencia_flag.astype(int)))
+
+
+
+#     [tracker,tracker_flag] = TESTE_tracker_off(std_Consistencia,GHI1_avg,DHI_avg,BNI_avg,cosAZS,AZS,Clear_sky_DHI,n);
+# M1 = [M1,tracker];
+# N1 = [N1,tracker_flag];
+# Nome = [Nome,{'Tracker off'}];
+
+    tracker, tracker_flag = teste_tracker_off(std_consistencia, ghi1_avg, dhi_avg, bni_avg, cosAZS, azs, clear_sky_dhi, n)
+
+
+
+# [comparacao_comp,comparacao_comp_flag] = TESTE_comparacao_completo(tracker,GHI1_avg,DHI_avg,BNI_avg,cosAZS,AZS,Clear_sky_DHI,n);
+# M1 = [M1,comparacao_comp(:,2)];
+# N1 = [N1,comparacao_comp_flag(:,2)];
+# Nome = [Nome,{'Comparacao entre variaveis DHI'}];
+# Var_anterior = comparacao_comp(:,2);
+
+    comparacao_comp, comparacao_comp_flag = teste_comparacao_completo(tracker, ghi1_avg, dhi_avg, bni_avg, cosAZS, azs, clear_sky_dhi, n)
+    var_anterior = comparacao_comp[:,1]
+
+    # pegar a posição [1]
+
+    # [consistencia,consistencia_Flag] = TESTE_consistencia(Var_anterior,Var_avg,n);
+    # M1 = [M1,consistencia];
+    # N1 = [N1,consistencia_Flag];
+    # Nome = [Nome,{'Consistencia'}];
+
+    consistencia, consistencia_flag = teste_consistencia(var_anterior, var_avg, n)
+
+
+
+
+
+
+
+
+#     [persistencia,persistencia_Flag] = TESTE_persistencia(consistencia,Var_avg_p,20,n);
+# M1 = [M1,persistencia];
+# N1 = [N1,persistencia_Flag];
+# Nome = [Nome,{'Persistência'}];
+
+    persistencia, persistencia_flag = teste_persistencia(consistencia, var_avg_p, 20, n)
+
+    print(pd.DataFrame(persistencia_flag).astype(int))
+
+
+

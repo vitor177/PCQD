@@ -18,17 +18,23 @@ def teste_std_consistencia(var_ant, var_avg, var_max, var_min, var_std, n):
     desv_pad_0_flag1 = 0
 
     for i in range(n):
-        if var_ant[i] == flag6:
+        # Verifica se var_ant tem mais de uma coluna
+        if var_ant.ndim > 1:
+            current_value = var_ant[i, 0]  # Acessa a primeira coluna
+        else:
+            current_value = var_ant[i]      # Acessa o valor diretamente
+
+        if current_value == flag6:
             desv_pad_0[i] = flag6
             desv_pad_0_flag6 += 1
         else:
-            if var_ant[i] == flag5:
+            if current_value == flag5:
                 desv_pad_0[i] = flag5
                 desv_pad_0_flag5 += 1
-            elif var_ant[i] in (flag4, flag3):
+            elif current_value in (flag4, flag3):
                 desv_pad_0[i] = flag4
                 desv_pad_0_flag4 += 1
-            elif var_ant[i] == flag2:
+            elif current_value == flag2:
                 desv_pad_0[i] = flag2
                 desv_pad_0_flag2 += 1
             else:
@@ -69,14 +75,13 @@ def teste_std_consistencia(var_ant, var_avg, var_max, var_min, var_std, n):
                 consistencia[i] = flag3
                 consistencia_flag3 += 1
 
+    z = 1
 
-    z=1
-
-    x = np.full((n,2), np.nan)
+    x = np.full((n, 2), np.nan)
     x[:, 0] = desv_pad_0
     x[:, 1] = consistencia
 
-    y = np.full((6,2), np.nan)
+    y = np.full((6, 2), np.nan)
     y[0, 0] = desv_pad_0_flag1
     y[1, 0] = desv_pad_0_flag2
     y[2, 0] = desv_pad_0_flag3

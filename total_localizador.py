@@ -1,8 +1,6 @@
 from utils import encontrar_indices
 
 def total_localizador(header):
-
-
     # %%
     # %%
     cols_vetor_completo = [
@@ -43,8 +41,8 @@ def total_localizador(header):
     cols_bni = ["bni_avg", "bni_max", "bni_min", "bni_std"]
     cols_lwdn = ["lwdn_avg", "lwdn_max", "lwdn_min", "lwdn_std"]
     cols_lwup = ["lwup_avg", "lwup_max", "lwup_min", "lwup_std"]
-    cols_clear_sky = ["clear_sky_ghi", "clear_sky_bhi", "clear_sky_dhi", "clear_sky_bni", 
-                    "ghi_cams", "bhi_cams", "dhi_cams", "bni_cams"]
+    cols_clear_sky = ["clear sky ghi", "clear sky bhi", "clear sky dhi", "clear sky bni", 
+                    "ghi", "bhi", "dhi", "bni"]
 
     vetor_completo = encontrar_indices(cols_vetor_completo, header.columns)
     temp = encontrar_indices(cols_temp, header.columns)
