@@ -60,13 +60,12 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
 
     xlsx = pd.DataFrame(aux)
 
-    print(xlsx)
-
     # Salvar XLSX (descomente a linha abaixo se quiser salvar como Excel)
     # xlsx.to_excel('Resultado.xlsx', index=False, header=False)
 
     # ========= Organização da planilha =======
     flags = np.column_stack([flags, y])
+
     aux_organizado = np.zeros((5, flags.shape[1]))
 
     aux_organizado[0, :] = flags[-1, :]
@@ -78,6 +77,9 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
     # ========= Ajustando para o Relatório =======
     ref = aux_organizado
 
+    print("FLAGS GHI: ", ref.astype(int))
+
+
     # ========== Faz o resumo das Flags da variável ==========
     estatistico = ref[:, -1]
     soma = np.sum(estatistico)
@@ -88,7 +90,7 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
 
 
     # Salvar estatístico (descomente a linha abaixo se quiser salvar como Excel)
-    # pd.DataFrame(estatistico).to_excel(f'Estatistico_{nome_var}.xlsx', index=False, header=False)
+    pd.DataFrame(estatistico).to_excel(f'Estatistico_{nome_var}.xlsx', index=False, header=False)
 
     # ============ Consolidação das Flags ====================
     n1 = np.column_stack([aux_organizado])
@@ -100,7 +102,7 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
     n1 = np.row_stack([[nome_var] + nome, n1])
 
     # Salvar N1 (descomente a linha abaixo se quiser salvar como Excel)
-    # pd.DataFrame(n1).to_excel(f'Flags_{nome_var}.xlsx', index=False, header=False)
+    pd.DataFrame(n1).to_excel(f'Flags_{nome_var}.xlsx', index=False, header=False)
 
 
 

@@ -79,6 +79,8 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1[4][0] = 0
     n1[5][0] = dhi_flag6
 
+    nome = ["RAW"]
+
 
 
 # [LF_DHI,LF_DHI_Flag] = TESTE_Limites_Fisicos(Var_avg,Var_avg,2000,-5,n);
@@ -87,6 +89,10 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # Nome = [Nome,{'Limites Físicos'}];
 
     lf_dhi, lf_dhi_flag = teste_limites_fisicos(var_avg, var_avg, 2000, -5, n)
+
+    m1 = np.column_stack((m1, lf_dhi))
+    n1 = np.hstack((n1, lf_dhi_flag.reshape(-1,1)))
+    nome.append("Limites Físicos")
 
 
 
@@ -99,6 +105,10 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     bsrn_dhi, bsnr_dhi_flag = teste_bsrn(lf_dhi, var_avg, fpmin, fpmaxdhi, ermin, ermaxdhi, n)
     #print(pd.DataFrame(n1.astype(int)))
 
+    m1 = np.column_stack((m1, bsrn_dhi))
+    n1 = np.hstack((n1, bsnr_dhi_flag))
+    nome.extend(["Fisicamente Possível", "Extremamente Raro"])
+
 # [Elevacao_DHI,Elevacao_DHI_Flag] = TESTE_angulo_elevacao(BSRN_DHI(:,2),alpha,n);
 # M1 = [M1,Elevacao_DHI];
 # N1 = [N1,Elevacao_DHI_Flag];
@@ -106,12 +116,19 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
     elevacao_dhi, elevaco_dhi_flag = teste_angulo_elevacao(bsrn_dhi[:,1], alpha, n)
 
+    m1 = np.column_stack((m1, elevacao_dhi))
+    n1 = np.hstack((n1, elevaco_dhi_flag.reshape(-1,1)))
+    nome.append("Angulo de elevação")
+
 
 #     [kd_DHI,kd_DHI_Flag] = TESTE_kd_DHI(Elevacao_DHI,DHI_avg,GHI1_avg,Iox,n);
 # M1 = [M1,kd_DHI(:,2)];
 # N1 = [N1,kd_DHI_Flag(:,2)];
 # Nome = [Nome,{'Índice de transmissividade'}];
-    kd_dhi, kd_dhi_flag = teste_kd_dhi(elevacao_dhi, dhi_avg, ghi1_avg, iox, n) 
+    kd_dhi, kd_dhi_flag = teste_kd_dhi(elevacao_dhi, dhi_avg, ghi1_avg, iox, n)
+    m1 = np.column_stack((m1, kd_dhi[:,1]))
+    n1 = np.hstack((n1, kd_dhi_flag[:,1].reshape(-1,1)))
+    nome.append("Índice de transmissividade") 
 
 
 
@@ -121,6 +138,10 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # Nome = [Nome,{'Desvio padrão nulo'},{'Consistência de parêmetros'}];
 
     std_consistencia, std_consistencia_flag = teste_std_consistencia(kd_dhi, var_avg, var_max, var_min, var_std, n)
+
+    m1 = np.column_stack((m1, std_consistencia))
+    n1 = np.hstack((n1, std_consistencia_flag))
+    nome.extend(["Desvio padrão nulo", "Consistência de parâmetros"])
 
     #print(pd.DataFrame(std_consistencia_flag.astype(int)))
 
@@ -133,6 +154,10 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
     tracker, tracker_flag = teste_tracker_off(std_consistencia, ghi1_avg, dhi_avg, bni_avg, cosAZS, azs, clear_sky_dhi, n)
 
+    m1 = np.column_stack((m1, tracker))
+    n1 = np.hstack((n1, tracker_flag.reshape(-1,1)))
+    nome.append("Tracker Off") 
+
 
 
 # [comparacao_comp,comparacao_comp_flag] = TESTE_comparacao_completo(tracker,GHI1_avg,DHI_avg,BNI_avg,cosAZS,AZS,Clear_sky_DHI,n);
@@ -142,6 +167,9 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # Var_anterior = comparacao_comp(:,2);
 
     comparacao_comp, comparacao_comp_flag = teste_comparacao_completo(tracker, ghi1_avg, dhi_avg, bni_avg, cosAZS, azs, clear_sky_dhi, n)
+    m1 = np.column_stack((m1, comparacao_comp[:,1]))
+    n1 = np.hstack((n1, comparacao_comp_flag[:,1].reshape(-1,1)))
+    nome.append("Comparacao entre variaveis DHI") 
     var_anterior = comparacao_comp[:,1]
 
     # pegar a posição [1]
@@ -153,12 +181,9 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
     consistencia, consistencia_flag = teste_consistencia(var_anterior, var_avg, n)
 
-
-
-
-
-
-
+    m1 = np.column_stack((m1, consistencia))
+    n1 = np.hstack((n1, consistencia_flag.reshape(-1,1)))
+    nome.append("Consistência") 
 
 #     [persistencia,persistencia_Flag] = TESTE_persistencia(consistencia,Var_avg_p,20,n);
 # M1 = [M1,persistencia];
@@ -167,7 +192,15 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
     persistencia, persistencia_flag = teste_persistencia(consistencia, var_avg_p, 20, n)
 
-    print(pd.DataFrame(persistencia_flag).astype(int))
+    m1 = np.column_stack((m1, persistencia))
+    n1 = np.hstack((n1, persistencia_flag.reshape(-1,1)))
+    nome.append("Persistência") 
 
+
+# [Resultado_BNI,Resultado_Flag_BNI,Flags_BNI,Estatistico_BNI,BNI_XLSX] = Resultado_Var(persistencia,Var_avg,Nome,nome_var,data,N1,n);
+# M1 = [M1,Resultado_BNI];
+# N1 = [N1,Resultado_Flag_BNI];
+# Nome = [Nome,{'Resultado'}];
+    resultado_bni, persistencia_flag, flags_bni, estatistico_bni, bni_xlsx = resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
 
 

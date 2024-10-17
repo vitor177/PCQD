@@ -76,6 +76,9 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # Nome
     lf_ghi1, lf_ghi_flag = teste_limites_fisicos(var_avg, var_avg, 2000, -5, n)
 
+    pd.DataFrame(lf_ghi1).to_excel(f'VEJAIVITAOO{nome_var}.xlsx', index=False, header=False)
+
+
 
 
     m1 = np.column_stack((m1, lf_ghi1))
@@ -99,12 +102,12 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
 
 
-    elevacao_ghi, elevacao_ghi_flag = teste_angulo_elevacao(bsrn_ghi1[:, 1], alpha, n)
+
+    elevacao_ghi, elevacao_ghi_flag = teste_angulo_elevacao(bsrn_ghi1[:, 0], alpha, n)
     m1 = np.column_stack((m1, elevacao_ghi))
     n1 = np.hstack((n1, elevacao_ghi_flag.reshape(-1,1)))
     nome.append("Angulo de elevação")
 
-    print("FLAGS DO ANGULO DE ELEVACAO: ", elevacao_ghi_flag)
 
 
 
@@ -126,6 +129,9 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     nome.extend(["Desvio padrão nulo", "Consistência de parâmetros"])
 
     var_anterior = std_consistencia
+
+    print(pd.DataFrame(n1, columns=nome).astype(int))
+
 
 
 
@@ -169,8 +175,6 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, persistencia_flag.reshape(-1,1)))
     nome.append("Persistência")
 
-    print("N1:", pd.DataFrame(n1.astype(int), columns=nome))
-
 
 
 
@@ -179,7 +183,6 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # %======= Consolidação dos resultados ======
     resultado_ghi1, resultado_flag_ghi1, flags_ghi1, estatistico_ghi1, ghi1_xlsx =  resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
 
-    #print(resultado_ghi1, resultado_flag_ghi1)
 
 # % ======= Calculo do Potêncial =========
 # [Pot_GHI1,Pot_GHI1_xlsx] = Potencial_Var(Resultado_GHI1,Var_avg,Var_max,Var_min,nome_var,horalocal,dia_mes,n);
