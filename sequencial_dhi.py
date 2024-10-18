@@ -16,6 +16,7 @@ from potencial_var import potencial_var
 from energia_var import energia_var
 from testes.teste_kd_dhi import teste_kd_dhi
 from testes.teste_tracker_off import teste_tracker_off
+from flag_plot import flag_plot
 import numpy as np
 
 def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
@@ -220,4 +221,8 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # [Energia_DHI,Energia_DHI_xlsx] = Energia_Var(Resultado_DHI,Var_avg,nome_var,n);
     energia_dhi, energia_dhi_xlsx = energia_var(resultado_dhi, var_avg, nome_var, n)
 
+    # Flag = Flag_plot(Var_avg,Resultado_DHI);
+    flag = flag_plot(var_avg, resultado_dhi)
+
+    print(flag)
 

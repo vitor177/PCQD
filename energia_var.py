@@ -114,7 +114,7 @@ def energia_var(resultado, var_avg, nome_var, n):
     faixa2 = ['G <= 300', '300 < G <= 700', '700 < G <= 1000', '1000 < G <= 1200', 'G >= 1200']
 
     # Exportação para o Excel
-    M = np.full((37, 8), np.nan, dtype=object)
+    M = np.full((37, 9), np.nan, dtype=object)
     
     # Preencher a primeira coluna com 'DHI'
     M[:, 0] = nome_var
@@ -124,17 +124,19 @@ def energia_var(resultado, var_avg, nome_var, n):
     M[:, 2] = cont
     # Preencher a quarta coluna com as porcentagens
     M[:, 3] = porcentagem
-    # Preencher a quinta coluna com faixa2, completando com NaN
-    M[:5, 4] = faixa2
-    # Preencher a sexta coluna com contx
-    M[:5, 5] = contx
-    # Preencher a sétima coluna com porcen
-    M[:5, 6] = porcen
 
-    M[:, 7] = np.nan
+    M[:, 4] = np.nan
+    # Preencher a quinta coluna com faixa2, completando com NaN
+    M[:5, 5] = faixa2
+    # Preencher a sexta coluna com contx
+    M[:5, 6] = contx
+    # Preencher a sétima coluna com porcen
+    M[:5, 7] = porcen
+
+    M[:, 8] = np.nan
 
     # Criar um DataFrame a partir da matriz
-    df = pd.DataFrame(M, columns=[nome_var, 'Faixa', 'Quantidade', 'Porcentagem', 'Faixa2', 'Contx', 'Porcen', ''])
+    df = pd.DataFrame(M, columns=[nome_var, 'Faixa', 'Quantidade', 'Porcentagem','', 'Faixa', 'Quantidade', 'Porcentagem', ''])
 
     # Exportar para Excel
     df.to_excel(f'Energia_{nome_var}.xlsx', index=False)
