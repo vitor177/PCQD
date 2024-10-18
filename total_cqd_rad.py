@@ -42,6 +42,8 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
         dhi_std = raw_rad.iloc[:, dhi[3]]
         dhi_avg_p = raw_met.iloc[start_row:, dhi[0]]
 
+        #print("DHIAVGGGGGGGGGGGGGGGGG: ", dhi_avg[:5])
+
     if len(bni) > 0:
         bni_avg = raw_rad.iloc[:, bni[0]]
         bni_max = raw_rad.iloc[:, bni[1]]
@@ -96,11 +98,9 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
 
     # is empty ghi2
     if not ghi2:
-        sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        #pass
+        #sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        pass
     if dhi:
-        print("VOU TER QUE FAZER ESSA LATA")
-
         sequencial_dhi(raw_rad, dados, dhi_avg, dhi_max, dhi_min, dhi_std, dhi_avg_p, 'Diffuse Horizontal Irradiance ', 'DHI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
    
 

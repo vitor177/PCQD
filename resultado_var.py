@@ -77,7 +77,7 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
     # ========= Ajustando para o Relatório =======
     ref = aux_organizado
 
-    print("FLAGS GHI: ", ref.astype(int))
+    #print("FLAGS GHI: ", ref.astype(int))
 
 
     # ========== Faz o resumo das Flags da variável ==========
@@ -102,7 +102,7 @@ def resultado_var(var_ant, var_avg, nome, nome_var, data, flags, n):
     n1 = np.row_stack([[nome_var] + nome, n1])
 
     # Salvar N1 (descomente a linha abaixo se quiser salvar como Excel)
-    pd.DataFrame(n1).to_excel(f'Flags_{nome_var}.xlsx', index=False, header=False)
+    pd.DataFrame(n1.T).to_excel(f'Flags_{nome_var}.xlsx', index=False, header=False)
 
 
 

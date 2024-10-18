@@ -19,7 +19,6 @@ from testes.teste_tracker_off import teste_tracker_off
 import numpy as np
 
 def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
-    print("ANTES DE TUDO: ", clear_sky)
     # Informações dos dados brutos
     n, m = raw.shape
 
@@ -81,6 +80,7 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
     nome = ["RAW"]
 
+    print("VAR_AVG", var_avg[:5])
 
 
 # [LF_DHI,LF_DHI_Flag] = TESTE_Limites_Fisicos(Var_avg,Var_avg,2000,-5,n);
@@ -93,6 +93,7 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     m1 = np.column_stack((m1, lf_dhi))
     n1 = np.hstack((n1, lf_dhi_flag.reshape(-1,1)))
     nome.append("Limites Físicos")
+
 
 
 
@@ -109,6 +110,8 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, bsnr_dhi_flag))
     nome.extend(["Fisicamente Possível", "Extremamente Raro"])
 
+
+
 # [Elevacao_DHI,Elevacao_DHI_Flag] = TESTE_angulo_elevacao(BSRN_DHI(:,2),alpha,n);
 # M1 = [M1,Elevacao_DHI];
 # N1 = [N1,Elevacao_DHI_Flag];
@@ -119,6 +122,8 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     m1 = np.column_stack((m1, elevacao_dhi))
     n1 = np.hstack((n1, elevaco_dhi_flag.reshape(-1,1)))
     nome.append("Angulo de elevação")
+
+
 
 
 #     [kd_DHI,kd_DHI_Flag] = TESTE_kd_DHI(Elevacao_DHI,DHI_avg,GHI1_avg,Iox,n);
@@ -195,6 +200,9 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     m1 = np.column_stack((m1, persistencia))
     n1 = np.hstack((n1, persistencia_flag.reshape(-1,1)))
     nome.append("Persistência") 
+
+    print(pd.DataFrame(n1, columns=nome).astype(int))
+
 
 
 # [Resultado_BNI,Resultado_Flag_BNI,Flags_BNI,Estatistico_BNI,BNI_XLSX] = Resultado_Var(persistencia,Var_avg,Nome,nome_var,data,N1,n);

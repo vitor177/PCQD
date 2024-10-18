@@ -35,7 +35,6 @@ def teste_bsrn(var_ant, var, fpmin, fpmax, ermin, ermax, n):
                 fp[i] = flag3
                 fp_flag3 += 1
                 reprovados_fp[i] = var[i]
-                print("VARIOS")
             else:
                 fp[i] = flag1
                 fp_flag1 += 1
