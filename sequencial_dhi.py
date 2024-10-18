@@ -17,6 +17,7 @@ from energia_var import energia_var
 from testes.teste_kd_dhi import teste_kd_dhi
 from testes.teste_tracker_off import teste_tracker_off
 from flag_plot import flag_plot
+from total_xplot3 import total_xplot3
 import numpy as np
 
 def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
@@ -224,5 +225,19 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # Flag = Flag_plot(Var_avg,Resultado_DHI);
     flag = flag_plot(var_avg, resultado_dhi)
 
-    print(flag)
+    for i in range(n):
+        if var_avg[i] > 2000:
+            var_avg[i] = 0
+            var_max[i] = 0
+            var_min[i] = 0
+
+    #print(flag)
+
+    # array[~np.isnan(array)]
+
+    
+
+
+    total_xplot3(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, 1000, 0, 'W/m²', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
+
 
