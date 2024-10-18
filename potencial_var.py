@@ -113,7 +113,9 @@ def potencial_var(resultado, var_avg, var_max, var_min, nome_var, horalocal, dia
     M_df.insert(0, 'Nome', nome_var)
 
     # Para exportar para Excel (caso necessário)
-    # M_df.to_excel('Potencial.xlsx', index=False)
+
+    pd.DataFrame(M_df).to_excel(f'Potencial{nome_var}.xlsx', index=False)
+
 
     return M, M_df
 

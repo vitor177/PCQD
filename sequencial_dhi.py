@@ -209,6 +209,15 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # M1 = [M1,Resultado_BNI];
 # N1 = [N1,Resultado_Flag_BNI];
 # Nome = [Nome,{'Resultado'}];
-    resultado_bni, persistencia_flag, flags_bni, estatistico_bni, bni_xlsx = resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
+    resultado_dhi, resultado_flag_dhi, flags_dhi, estatistico_dhi, dhi_xlsx = resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
+    m1 = np.column_stack((m1, resultado_dhi))
+    n1 = np.hstack((n1, resultado_flag_dhi.reshape(-1,1)))
+
+    #[Pot_DHI,Pot_DHI_xlsx] = Potencial_Var(Resultado_DHI,Var_avg,Var_max,Var_min,nome_var,horalocal,dia_mes,n);
+
+    pot_dhi, pot_dhi_xlsx = potencial_var(resultado_dhi, var_avg, var_max, var_min, nome_var, horalocal, dia_mes, n)
+
+    # [Energia_DHI,Energia_DHI_xlsx] = Energia_Var(Resultado_DHI,Var_avg,nome_var,n);
+    energia_dhi, energia_dhi_xlsx = energia_var(resultado_dhi, var_avg, nome_var, n)
 
 
