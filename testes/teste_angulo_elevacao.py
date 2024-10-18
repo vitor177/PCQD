@@ -27,6 +27,7 @@ def teste_angulo_elevacao(ant_avg, alpha, n):
             elevacao7[i] = flag5
             elevacao7_flag5 += 1
         elif ant_avg[i] in [flag3, flag4]:
+            print("VAISF")
             elevacao7[i] = flag4
             elevacao7_flag4 += 1
         else:

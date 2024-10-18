@@ -11,14 +11,15 @@ def teste_persistencia(var_ant, var_dia_anterior, n_amostras, n):
 
     # Inicialização das variáveis
     persistencia = np.full(n, np.nan)
-    
+
+    # Contadores para as flags
     persistencia_flag6 = 0
     persistencia_flag5 = 0
     persistencia_flag4 = 0
     persistencia_flag3 = 0
     persistencia_flag2 = 0
     persistencia_flag1 = 0
-
+    
     # Loop de comparação
     for i in range(n):
         if var_ant[i] == flag6:
@@ -34,6 +35,7 @@ def teste_persistencia(var_ant, var_dia_anterior, n_amostras, n):
             persistencia[i] = flag2
             persistencia_flag2 += 1
         else:
+            # Cálculo para flag1 ou flag3
             if abs(np.max(var_dia_anterior[i:i+n_amostras]) - np.min(var_dia_anterior[i:i+n_amostras])) != 0:
                 persistencia[i] = flag1
                 persistencia_flag1 += 1
@@ -44,6 +46,7 @@ def teste_persistencia(var_ant, var_dia_anterior, n_amostras, n):
     # Preparação dos resultados
     x = persistencia
 
+    # Inicialização de y com contadores
     y = np.full(6, np.nan)
     y[0] = persistencia_flag1
     y[1] = persistencia_flag2

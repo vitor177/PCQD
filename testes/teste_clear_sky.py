@@ -1,6 +1,8 @@
 import numpy as np
 
 def teste_clear_sky(var_ant, var, mcc_clear, n):
+
+
     # Definição das flags
     flag6 = 60000
     flag5 = 50000
@@ -22,16 +24,16 @@ def teste_clear_sky(var_ant, var, mcc_clear, n):
 
     # Loop de comparação
     for i in range(n):
-        if var_ant[i] == flag6:
+        if var_ant[i, 0] == flag6:
             clear_sky[i] = flag6
             clear_sky_flag6 += 1
-        elif var_ant[i] == flag5:
+        elif var_ant[i, 0] == flag5:
             clear_sky[i] = flag5
             clear_sky_flag5 += 1
-        elif var_ant[i] in [flag4, flag3]:
+        elif var_ant[i, 0] in [flag4, flag3]:
             clear_sky[i] = flag4
             clear_sky_flag4 += 1
-        elif var_ant[i] == flag2:
+        elif var_ant[i, 0] == flag2:
             clear_sky[i] = flag2
             clear_sky_flag2 += 1
         else:

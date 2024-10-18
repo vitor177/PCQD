@@ -10,7 +10,7 @@ from total_localizador import total_localizador
 from total_varrad import total_varrad
 
 # Informações de entrada
-arquivo = 'data/SPES01-2024-07.xlsx'
+arquivo = 'data/SPES01-2024-09.xlsx'
 
 header = pd.read_excel(arquivo)
 colunas = list(header.iloc[0])

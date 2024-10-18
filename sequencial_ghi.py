@@ -10,14 +10,16 @@ from testes.teste_comparacao_completo import teste_comparacao_completo
 from testes.teste_clear_sky import teste_clear_sky
 from testes.teste_consistencia import teste_consistencia
 from testes.teste_persistencia import teste_persistencia
-
+from resultado_var import resultado_var
+from potencial_var import potencial_var
+from energia_var import energia_var
 
 def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
     n, m = raw.shape
 
     data = raw.iloc[:, 0].to_numpy()
 
-    clear_sky_ghi = 0
+    clear_sky_ghi = np.zeros(n)
 
     if ghi2:
         ghi2_avg = raw.iloc[:, ghi2[0]]
@@ -74,10 +76,15 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # Nome
     lf_ghi1, lf_ghi_flag = teste_limites_fisicos(var_avg, var_avg, 2000, -5, n)
 
+    pd.DataFrame(lf_ghi1).to_excel(f'VEJAIVITAOO{nome_var}.xlsx', index=False, header=False)
+
+
+
 
     m1 = np.column_stack((m1, lf_ghi1))
     n1 = np.hstack((n1, lf_ghi_flag.reshape(-1,1)))
     nome.append("Limites Físicos")
+
 
 
     
@@ -94,16 +101,14 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     nome.extend(["Fisicamente Possível", "Extremamente Raro"])
 
 
-    
 
-    #print(f"Teste aplicado BSNR: lf_ghi1: {bsrn_ghi1} e {bsnr_ghi1_flag}")
 
-    #print("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII: ", type(bsrn_ghi1))
-
-    elevacao_ghi, elevacao_ghi_flag = teste_angulo_elevacao(bsrn_ghi1[:, 1], alpha, n)
+    elevacao_ghi, elevacao_ghi_flag = teste_angulo_elevacao(bsrn_ghi1[:, 0], alpha, n)
     m1 = np.column_stack((m1, elevacao_ghi))
     n1 = np.hstack((n1, elevacao_ghi_flag.reshape(-1,1)))
     nome.append("Angulo de elevação")
+
+
 
 
     #print(f"Teste aplicado Angulo: lf_ghi1: {elevacao_ghi} e {elevacao_ghi_flag}")
@@ -113,6 +118,8 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, kt_ghi1_flag[:,1].reshape(-1,1)))
     nome.append("Índice de transmissividade")
 
+
+
     #print(f"Teste aplicado KT GHI: lf_ghi1: {kt_ghi} e {kt_ghi1_flag}")
 
     # [std_Consistencia,std_Consistencia_flag] = TESTE_std_Consistencia(kt_GHI,Var_avg,Var_max,Var_min,Var_std,n);
@@ -121,8 +128,12 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, std_consistencia_flag))
     nome.extend(["Desvio padrão nulo", "Consistência de parâmetros"])
 
-    
     var_anterior = std_consistencia
+
+    print(pd.DataFrame(n1, columns=nome).astype(int))
+
+
+
 
     #print(f"Teste aplicado STD Consistencia: lf_ghi1: {std_consistencia} e {std_consistencia_flag}")
 
@@ -159,18 +170,31 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, consistencia_flag.reshape(-1,1)))
     nome.append("Consistência")
 
-
-
     persistencia, persistencia_flag = teste_persistencia(consistencia, var_avg_p, 20, n)
     m1 = np.column_stack((m1, persistencia))
     n1 = np.hstack((n1, persistencia_flag.reshape(-1,1)))
     nome.append("Persistência")
-    print(m1.shape)
 
-    print(n1.shape)
 
-    print(nome)
-    
+
+
+
+
+    # %======= Consolidação dos resultados ======
+    resultado_ghi1, resultado_flag_ghi1, flags_ghi1, estatistico_ghi1, ghi1_xlsx =  resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
+
+
+# % ======= Calculo do Potêncial =========
+# [Pot_GHI1,Pot_GHI1_xlsx] = Potencial_Var(Resultado_GHI1,Var_avg,Var_max,Var_min,nome_var,horalocal,dia_mes,n);
+    #pot_ghi1, pot_ghi1xlsx = potencial_var(resultado_ghi1, var_avg, var_max, var_min, nome_var, horalocal, dia_mes, n)
+
+    #print(pot_ghi1xlsx)
+
+    # Cálculo da Energia
+    # [Energia_GHI1,Energia_GHI1_xlsx] = Energia_Var(Resultado_GHI1,Var_avg,nome_var,n);
+    #energia_ghi1, energia_ghi1_xlsx = energia_var(resultado_ghi1, var_avg, nome_var, n)
+
+    #print(energia_ghi1)
     
     
 # %==========================================================================
@@ -187,6 +211,7 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
 # function [M1,N1,Nome,GHI1_XLSX,Flags_GHI1,Estatistico_GHI1,Pot_GHI1_xlsx,Energia_GHI1_xlsx] = Sequencial_GHI(RAW,DADOS,Var_avg,Var_max,Var_min,Var_std,Var_avg_p,titulo,nome_var,GHI2,GHI3,POA,DHI,BNI,Clear_sky,mes,dia_final,ano,Nome_Arquivo)
 
-
+#pipeline relativamente completo, expandindo o nosso caso de teste enquanto é disponibilizado o conjunto que iremos trabalhar
+# biblioteca ragas
 
     return 
