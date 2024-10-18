@@ -111,30 +111,35 @@ def energia_var(resultado, var_avg, nome_var, n):
     soma_contx = np.sum(contx)
     porcen = (contx / soma_contx) * 100
 
-    # Exportação para o Excel
-    M = np.full((37, 4), np.nan)
-    M[:, 0] = cont
-    M[:, 1] = porcentagem
-    M[:5, 2] = contx
-    M[:5, 3] = porcen
-
-    M = pd.DataFrame(M, columns=['Quantidade', 'Porcentagem', '', ''])
-    faixa_df = pd.DataFrame({'Faixa': faixa})
     faixa2 = ['G <= 300', '300 < G <= 700', '700 < G <= 1000', '1000 < G <= 1200', 'G >= 1200']
 
-    XLSX = pd.concat([
-        faixa_df, M.iloc[:, :2],
-        pd.DataFrame({faixa2[i]: [contx[i]] for i in range(len(faixa2))}),
-        pd.DataFrame({'Porcentagem': porcen})
-    ], axis=1)
+    # Exportação para o Excel
+    M = np.full((37, 9), np.nan, dtype=object)
+    
+    # Preencher a primeira coluna com 'DHI'
+    M[:, 0] = nome_var
+    # Preencher a segunda coluna com as faixas
+    M[:, 1] = faixa
+    # Preencher a terceira coluna com as contagens
+    M[:, 2] = cont
+    # Preencher a quarta coluna com as porcentagens
+    M[:, 3] = porcentagem
 
-    XLSX.to_excel('Energia.xlsx', index=False)
+    M[:, 4] = np.nan
+    # Preencher a quinta coluna com faixa2, completando com NaN
+    M[:5, 5] = faixa2
+    # Preencher a sexta coluna com contx
+    M[:5, 6] = contx
+    # Preencher a sétima coluna com porcen
+    M[:5, 7] = porcen
 
-    return M.values, XLSX
+    M[:, 8] = np.nan
 
-# Exemplo de uso
-# resultado = np.random.randint(0, 20000, size=(100, 1))
-# var_avg = np.random.uniform(0, 2000, size=(100, 1))
-# nome_var = "Variável de Energia"
-# n = 100
-# M, XLSX = energia_var(resultado, var_avg, nome_var, n)
+    # Criar um DataFrame a partir da matriz
+    df = pd.DataFrame(M, columns=[nome_var, 'Faixa', 'Quantidade', 'Porcentagem','', 'Faixa', 'Quantidade', 'Porcentagem', ''])
+
+    # Exportar para Excel
+    df.to_excel(f'Energia_{nome_var}.xlsx', index=False)
+
+    # Retornar o DataFrame e o nome do arquivo
+    return M, df

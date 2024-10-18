@@ -16,6 +16,8 @@ from potencial_var import potencial_var
 from energia_var import energia_var
 from testes.teste_kd_dhi import teste_kd_dhi
 from testes.teste_tracker_off import teste_tracker_off
+from flag_plot import flag_plot
+from total_xplot3 import total_xplot3
 import numpy as np
 
 def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
@@ -209,6 +211,33 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # M1 = [M1,Resultado_BNI];
 # N1 = [N1,Resultado_Flag_BNI];
 # Nome = [Nome,{'Resultado'}];
-    resultado_bni, persistencia_flag, flags_bni, estatistico_bni, bni_xlsx = resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
+    resultado_dhi, resultado_flag_dhi, flags_dhi, estatistico_dhi, dhi_xlsx = resultado_var(persistencia, var_avg, nome, nome_var, data, n1, n)
+    m1 = np.column_stack((m1, resultado_dhi))
+    n1 = np.hstack((n1, resultado_flag_dhi.reshape(-1,1)))
+
+    #[Pot_DHI,Pot_DHI_xlsx] = Potencial_Var(Resultado_DHI,Var_avg,Var_max,Var_min,nome_var,horalocal,dia_mes,n);
+
+    pot_dhi, pot_dhi_xlsx = potencial_var(resultado_dhi, var_avg, var_max, var_min, nome_var, horalocal, dia_mes, n)
+
+    # [Energia_DHI,Energia_DHI_xlsx] = Energia_Var(Resultado_DHI,Var_avg,nome_var,n);
+    energia_dhi, energia_dhi_xlsx = energia_var(resultado_dhi, var_avg, nome_var, n)
+
+    # Flag = Flag_plot(Var_avg,Resultado_DHI);
+    flag = flag_plot(var_avg, resultado_dhi)
+
+    for i in range(n):
+        if var_avg[i] > 2000:
+            var_avg[i] = 0
+            var_max[i] = 0
+            var_min[i] = 0
+
+    #print(flag)
+
+    # array[~np.isnan(array)]
+
+    
+
+
+    total_xplot3(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, 1000, 0, 'W/m²', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
 
 
