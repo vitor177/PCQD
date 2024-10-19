@@ -17,6 +17,7 @@ from energia_var import energia_var
 from testes.teste_kd_dhi import teste_kd_dhi
 from testes.teste_tracker_off import teste_tracker_off
 from flag_plot import flag_plot
+from total_xplot3c import total_xplot3c
 from total_xplot3 import total_xplot3
 import numpy as np
 
@@ -241,3 +242,25 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     total_xplot3(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, 1000, 0, 'W/m²', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
 
 
+    # TOTAL_Xplot3C(Var_max,Var_min,Var_avg,data,2,titulo,dia_final,mes,ano,1000,0,'W/m²',10,'DHI max','DHI min','DHI avg',Nome_Arquivo)
+
+
+    total_xplot3c(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 1000, 0, 'W/m²', 10,'DHI max','DHI min', 'DHI avg', nome_arquivo)
+
+        # total_xplot3c(variavel1=ghi_max,
+        #         variavel2=ghi_min,
+        #         variavel3=ghi_avg,
+        #         data=data,
+        #         num_figura=fig+2,
+        #         titulo=titulo,
+        #         diafinal=dia_final,
+        #         mes=mes,
+        #         ano=anox,
+        #         lim_sy=1800,
+        #         lim_iy=0,
+        #         und_y='[m/s]',
+        #         tam_font=10,
+        #         var1='GHI1 max',
+        #         var2='GHI12 min',
+        #         var3='GHI1 avg',
+        #         nome_arquivo=nome_arquivo)
