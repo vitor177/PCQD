@@ -76,8 +76,6 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # Nome
     lf_ghi1, lf_ghi_flag = teste_limites_fisicos(var_avg, var_avg, 2000, -5, n)
 
-    pd.DataFrame(lf_ghi1).to_excel(f'VEJAIVITAOO{nome_var}.xlsx', index=False, header=False)
-
 
 
 
