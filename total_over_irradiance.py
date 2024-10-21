@@ -530,13 +530,14 @@ def total_over_irradiance(raw_rad, dados, ghi, clear_sky, dia_final, mes, ano, a
     # %%
     # Encontrar o máximo global entre os dois valores
     max_energia = max(max_energia_1000, max_energia_1367)
-    max_energia
+    max_energia_clear_sky = 0
     # %%
     hora_energia_max = '99'
     # %%
     for index, row in energia.iterrows():
         if row.iloc[1] == max_energia:
             hora_energia_max = row.iloc[0]
+            #max_energia_clear_sky = energia_cl
             break
     hora_energia_max
     # %%
@@ -775,13 +776,9 @@ def total_over_irradiance(raw_rad, dados, ghi, clear_sky, dia_final, mes, ano, a
     nome = f"{nome_arquivo}-{arquivo}- Temporal_distribution.xlsx"
 
     # Salvando como arquivo Excel
-    AUX_concat.to_excel(nome, index=False, header=None)  
+    AUX_concat.to_excel(nome, index=False, header=None)
 
-
-
-
-
-
+    # FALTA FAZER O CHARACTERISTIC
 
 
 

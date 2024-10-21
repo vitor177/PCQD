@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from sequencial_ghi import sequencial_ghi
 from sequencial_dhi import sequencial_dhi
+from sequencial_bni import sequencial_bni
+from sequencial_gri import sequencial_gri
 from total_over_irradiance import total_over_irradiance
 def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es):
     data = raw_rad.iloc[:, 0].to_numpy()
@@ -101,9 +103,23 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
     if not ghi2:
         sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
         total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI ', 'GHI', nome_arquivo  )
-        pass
+    if ghi2:
+        sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance 1', 'GHI1', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        sequencial_ghi(raw_rad, dados, ghi2_avg, ghi2_max, ghi2_min, ghi2_std, ghi2_avg_p, 'Global Horizontal Irradiance 2', 'GHi2', ghi1, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 1', 'GHI1', nome_arquivo  )
+        total_over_irradiance(raw_rad, dados, ghi2, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 2', 'GHI2', nome_arquivo  )
+    if ghi3:
+        sequencial_ghi(raw_rad, dados, ghi3_avg, ghi3_max, ghi3_min, ghi3_std, ghi3_avg_p, 'Global Horizontal 3', 'GHI3', ghi1, ghi2, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        total_over_irradiance(raw_rad, dados, ghi3, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 3 ', 'GHI3', nome_arquivo)
     if dhi:
         sequencial_dhi(raw_rad, dados, dhi_avg, dhi_max, dhi_min, dhi_std, dhi_avg_p, 'Diffuse Horizontal Irradiance ', 'DHI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-   
+        sequencial_bni(raw_rad, dados, bni_avg, bni_max, bni_min, bni_std, bni_avg_p, 'Bean Normal Irradiance ', 'BNI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+    if gri1 and not gri2:
+        sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  ','GRI', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
+    if gri2:
+        sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  1 ','GRI 1', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
+        sequencial_gri(raw_rad, dados, gri2_avg, gri2_max, gri2_min, gri2_std, gri2_avg, 'Global Horizontal Reflective  2 ','GRI 2', gri1, clear_sky, mes, dia_final, ano, nome_arquivo)
+
+
 
     return 
