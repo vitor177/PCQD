@@ -4,10 +4,10 @@ from sequencial_ghi import sequencial_ghi
 from sequencial_dhi import sequencial_dhi
 from sequencial_bni import sequencial_bni
 from sequencial_gri import sequencial_gri
-
+from sequencial_ur import sequencial_ur
 from sequencial_temp import sequencial_temp
 # from sequencial_ur import sequencial_ur
-# from sequencial_vel import sequencial_vel
+from sequencial_vel import sequencial_vel
 # from sequencial_dir import sequencial_dir
 # from sequencial_press import sequencial_press
 
@@ -65,22 +65,26 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
 
     if temp:
         sequencial_temp(raw, temp_avg, temp_max, temp_min, temp_std, temp_avg_dia, temp_fp_min, temp_fp_min, 'Air temperature ','Temp', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo)
-
         # Sequencial_TEMP
         pass
     if ur:
+        sequencial_ur(raw, ur_avg, ur_max, ur_min, ur_std, ur_avg_dia, 'Relative Humidity of the Air ', 'RH', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo)
         # Sequencial_UR
         pass
     if vel:
+        sequencial_vel(raw, vel_avg, vel_max, vel_min, vel_std, vel_avg_dia, 'Wind Speed ', 'WS', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo)
         # Sequencial_VEL
         pass
     if dire:
+        #sequencial_dire()
         # Sequencial_DIR
         pass
     if press:
+        #sequencial_press()
         # Sequencial_PRESS
         pass
     if prec:
+        #sequencial_prec()
         # Sequencial_PREC
 
         pass

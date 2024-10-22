@@ -4,6 +4,9 @@ import pandas as pd
 import seaborn as sns
 
 def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, limsy, n):
+    # Cria uma nova figura
+    plt.figure(num_figura, figsize=(8, 4))
+    
     var_x = np.full((n, 1), np.nan)
 
     flag6 = 60000
@@ -23,17 +26,14 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     var_x[var_x > 1000] = 0
     var_y[var_y > 1000] = np.nan
 
-    # Calcular estatísticas
-    # (Aqui você pode manter seu código anterior para calcular estatísticas)
+    # Calcular a média como float
+    mean_value = np.nanmean(var_y.astype(float))
 
     #------------------------------------------------------
     #                      Plot Bloxplot com Seaborn
     #------------------------------------------------------
-
-    plt.figure(num_figura, figsize=(4, 6))
     sns.boxplot(data=var_y, whis=2.5, width=0.75)
 
-    mean_value = np.nanmean(var_y)
     plt.plot(1, mean_value, 'ko', markersize=10, markerfacecolor='k', label='Média')
 
     # Configurando título e rótulos
@@ -55,6 +55,6 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     plt.savefig(f'{nome_arquivo}_bloxplot_{nome_var}.pdf', format='pdf')
     plt.savefig(f'{nome_arquivo}_bloxplot_{nome_var}.png', format='png')
 
-    #plt.show()  # Exibe o gráfico
+    plt.close(num_figura)  # Fecha a figura atual para liberar memória
 
     return
