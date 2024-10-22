@@ -8,9 +8,9 @@ from sequencial_ur import sequencial_ur
 from sequencial_temp import sequencial_temp
 # from sequencial_ur import sequencial_ur
 from sequencial_vel import sequencial_vel
-# from sequencial_dir import sequencial_dir
-# from sequencial_press import sequencial_press
-
+from sequencial_dire import sequencial_dire
+from sequencial_press import sequencial_press
+#from sequencial_prec import sequencial_prec
 
 from total_over_irradiance import total_over_irradiance
 def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, temp_fp_min, lims_press, limi_press, mes, dia_final, ano, fig, prec_max, nome_arquivo, es):
@@ -34,12 +34,26 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
         ur_min = raw.iloc[dia_anterior:, ur[2]].to_numpy()
         ur_std = raw.iloc[dia_anterior:, ur[3]].to_numpy()
         ur_avg_dia = raw.iloc[:, ur[0]].to_numpy()  
-    if es == 'SPES01':
-        ur_avg = (raw.iloc[dia_anterior:, ur[0]] * 100).to_numpy()  # Multiplicando e convertendo
-        ur_max = (raw.iloc[dia_anterior:, ur[1]] * 100).to_numpy()  # Multiplicando e convertendo
-        ur_min = (raw.iloc[dia_anterior:, ur[2]] * 100).to_numpy()  # Multiplicando e convertendo
-        ur_std = (raw.iloc[dia_anterior:, ur[3]] * 100).to_numpy()  # Multiplicando e convertendo
-        ur_avg_dia = (raw.iloc[:, ur[0]] * 100).to_numpy()
+        if es == 'SPES01':
+            ur_avg = (raw.iloc[dia_anterior:, ur[0]] * 100).to_numpy()  # Multiplicando e convertendo
+            ur_max = (raw.iloc[dia_anterior:, ur[1]] * 100).to_numpy()  # Multiplicando e convertendo
+            ur_min = (raw.iloc[dia_anterior:, ur[2]] * 100).to_numpy()  # Multiplicando e convertendo
+            ur_std = (raw.iloc[dia_anterior:, ur[3]] * 100).to_numpy()  # Multiplicando e convertendo
+            ur_avg_dia = (raw.iloc[:, ur[0]] * 100).to_numpy()
+    if press:
+        press_avg = raw.iloc[dia_anterior:, press[0]].to_numpy()
+        press_max = raw.iloc[dia_anterior:, press[1]].to_numpy()
+        press_min = raw.iloc[dia_anterior:, press[2]].to_numpy()
+        press_std = raw.iloc[dia_anterior:, press[3]].to_numpy()
+        press_avg_dia = raw.iloc[:, press[0]].to_numpy()  
+
+    if prec:
+        prec_avg = raw.iloc[dia_anterior:, prec[0]].to_numpy()
+        prec_avg_dia = raw.iloc[:, prec[0]].to_numpy() 
+
+
+
+    
     if vel:
         vel_avg = raw.iloc[dia_anterior:, vel[0]].to_numpy()
         vel_max = raw.iloc[dia_anterior:, vel[1]].to_numpy()
@@ -76,11 +90,11 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
         # Sequencial_VEL
         pass
     if dire:
-        #sequencial_dire()
+        sequencial_dire(raw, dire_avg, dire_max, dire_min, dire_std, dire_avg_dia, 'Wind Direction ', 'WD', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo)
         # Sequencial_DIR
         pass
     if press:
-        #sequencial_press()
+        sequencial_press(raw, press_avg, press_max, press_min, press_std, press_avg_dia, lims_press, limi_press, 'Pressure', 'P', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo, es)
         # Sequencial_PRESS
         pass
     if prec:
