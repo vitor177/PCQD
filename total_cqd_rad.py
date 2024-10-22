@@ -101,6 +101,9 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
 
     # is empty ghi2
     if not ghi2:
+        print("BEFORE ALL")
+        print("RAW RAD SHAPE: ", raw_rad.shape)
+        print("VAR AVG: ", ghi1_avg.shape)
         sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
         total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI ', 'GHI', nome_arquivo  )
     if ghi2:

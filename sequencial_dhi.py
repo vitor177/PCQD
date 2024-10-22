@@ -204,7 +204,7 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, persistencia_flag.reshape(-1,1)))
     nome.append("Persistência") 
 
-    print(pd.DataFrame(n1, columns=nome).astype(int))
+    #print(pd.DataFrame(n1, columns=nome).astype(int))
 
 
 
