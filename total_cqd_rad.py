@@ -45,8 +45,6 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
         dhi_std = raw_rad.iloc[:, dhi[3]]
         dhi_avg_p = raw_met.iloc[start_row:, dhi[0]]
 
-        #print("DHIAVGGGGGGGGGGGGGGGGG: ", dhi_avg[:5])
-
     if len(bni) > 0:
         bni_avg = raw_rad.iloc[:, bni[0]]
         bni_max = raw_rad.iloc[:, bni[1]]
@@ -90,20 +88,8 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
     ioh = dados.iloc[:,19]
     iox = dados.iloc[:,21]
 
-# %return
-# if isempty(GHI2)    
-# [GHI_M1,GHI_N1,GHI_Nome,GHI_XLSX,Flags_GHI,Estatistico_GHI,Pot_GHI_xlsx,Energia_GHI_xlsx] = Sequencial_GHI(RAW_RAD,DADOS,GHI1_avg,GHI1_max,GHI1_min,GHI1_std,GHI1_avg_p,'Global Horizontal Irradiance ','GHI',GHI2,GHI3,POA,DHI,BNI,Clear_sky,mes,dia_final,ano,Nome_Arquivo);
-# [GHI_Over] = TOTAL_Over_Irradiance(RAW_RAD,DADOS,GHI1,Clear_sky,dia_final,mes,ano,'Overirradiance Events - GHI ','GHI',Nome_Arquivo);
-# end
-
-
-    # TO AQUI
-
     # is empty ghi2
     if not ghi2:
-        print("BEFORE ALL")
-        print("RAW RAD SHAPE: ", raw_rad.shape)
-        print("VAR AVG: ", ghi1_avg.shape)
         sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
         total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI ', 'GHI', nome_arquivo  )
     if ghi2:

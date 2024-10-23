@@ -76,17 +76,10 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     # Nome
     lf_ghi1, lf_ghi_flag = teste_limites_fisicos(var_avg, var_avg, 2000, -5, n)
 
-
-
-
     m1 = np.column_stack((m1, lf_ghi1))
     n1 = np.hstack((n1, lf_ghi_flag.reshape(-1,1)))
     nome.append("Limites Físicos")
 
-
-
-    
-    # TESTE BSNR
     fpmin = -4
     fpmaxghi = (1.5 * iox * cosAZS12) + 100
     ermin = -2
@@ -98,42 +91,22 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     n1 = np.hstack((n1, bsnr_ghi1_flag))
     nome.extend(["Fisicamente Possível", "Extremamente Raro"])
 
-
-
-
     elevacao_ghi, elevacao_ghi_flag = teste_angulo_elevacao(bsrn_ghi1[:, 0], alpha, n)
     m1 = np.column_stack((m1, elevacao_ghi))
     n1 = np.hstack((n1, elevacao_ghi_flag.reshape(-1,1)))
     nome.append("Angulo de elevação")
-
-
-
-
-    #print(f"Teste aplicado Angulo: lf_ghi1: {elevacao_ghi} e {elevacao_ghi_flag}")
 
     kt_ghi, kt_ghi1_flag = teste_kt_ghi(elevacao_ghi, var_avg, cosAZS, iox, n)
     m1 = np.column_stack((m1, kt_ghi[:,1]))
     n1 = np.hstack((n1, kt_ghi1_flag[:,1].reshape(-1,1)))
     nome.append("Índice de transmissividade")
 
-
-
-    #print(f"Teste aplicado KT GHI: lf_ghi1: {kt_ghi} e {kt_ghi1_flag}")
-
-    # [std_Consistencia,std_Consistencia_flag] = TESTE_std_Consistencia(kt_GHI,Var_avg,Var_max,Var_min,Var_std,n);
     std_consistencia, std_consistencia_flag = teste_std_consistencia(kt_ghi[:, 0], var_avg, var_max, var_min, var_std, n)
     m1 = np.column_stack((m1, std_consistencia))
     n1 = np.hstack((n1, std_consistencia_flag))
     nome.extend(["Desvio padrão nulo", "Consistência de parâmetros"])
 
     var_anterior = std_consistencia
-
-    print(pd.DataFrame(n1, columns=nome).astype(int))
-
-
-
-
-    #print(f"Teste aplicado STD Consistencia: lf_ghi1: {std_consistencia} e {std_consistencia_flag}")
 
     if ghi2 and not ghi3:
         aux = []
@@ -205,11 +178,5 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 # Nome = [Nome,{'Resultado'}];
 
     #resultado_var(persistencia, var_avg, nome_arquivo, nome_var, data, n1, n)
-
-
-# function [M1,N1,Nome,GHI1_XLSX,Flags_GHI1,Estatistico_GHI1,Pot_GHI1_xlsx,Energia_GHI1_xlsx] = Sequencial_GHI(RAW,DADOS,Var_avg,Var_max,Var_min,Var_std,Var_avg_p,titulo,nome_var,GHI2,GHI3,POA,DHI,BNI,Clear_sky,mes,dia_final,ano,Nome_Arquivo)
-
-#pipeline relativamente completo, expandindo o nosso caso de teste enquanto é disponibilizado o conjunto que iremos trabalhar
-# biblioteca ragas
 
     return 

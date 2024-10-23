@@ -1,3 +1,5 @@
+import os
+
 def encontrar_indices(lista_menor, lista_maior):
     """
     Retorna os índices de correspondência entre elementos da lista_menor
@@ -11,3 +13,14 @@ def encontrar_indices(lista_menor, lista_maior):
     - Uma lista de índices da lista_maior onde ocorre a correspondência.
     """
     return [i for i, item in enumerate(lista_maior) if item.lower() in [term.lower() for term in lista_menor]]
+
+
+def excluir_arquivos():
+    extensoes = ('.xlsx', '.pdf', '.png', '.svg')
+    
+    # Lista todos os arquivos na pasta atual
+    for arquivo in os.listdir('.'):
+        # Verifica se o arquivo possui uma das extensões
+        if arquivo.endswith(extensoes):
+            os.remove(arquivo)  # Exclui o arquivo
+            print(f'Excluído: {arquivo}')
