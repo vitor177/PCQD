@@ -7,7 +7,7 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     # Cria uma nova figura
     plt.figure(num_figura, figsize=(8, 4))
     
-    var_x = np.full((n, 1), np.nan)
+    var_x = np.full(n, np.nan)
 
     flag6 = 60000
     flag5 = 50000
@@ -43,7 +43,7 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     plt.ylim([limiy, limsy])
     plt.grid(True)
 
-    # Removendo valores do eixo X
+    # # Removendo valores do eixo X
     plt.xticks([])
 
     # Exibindo valores mínimo, máximo e média no gráfico
@@ -51,10 +51,11 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     plt.text(1.1, np.nanmax(var_y), f'{np.nanmax(var_y):.2f}', fontsize=15, verticalalignment='bottom')
     plt.text(1.1, mean_value, f'{mean_value:.2f}', fontsize=15, verticalalignment='bottom')
 
-    # Salvando o gráfico
+    #Salvando o gráfico
     plt.savefig(f'{nome_arquivo}_bloxplot_{nome_var}.pdf', format='pdf')
     plt.savefig(f'{nome_arquivo}_bloxplot_{nome_var}.png', format='png')
 
-    plt.close(num_figura)  # Fecha a figura atual para liberar memória
+    #plt.close(num_figura)  # Fecha a figura atual para liberar memória
+    plt.clf()
 
     return

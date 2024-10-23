@@ -16,7 +16,7 @@ def sequencial_press(raw, var_avg, var_max, var_min, var_std, var_avg_dia, limS,
     n, m = raw.shape
 
     dia_anterior = 1440
-    data = raw.iloc[dia_anterior:, 0]
+    data = raw.iloc[dia_anterior:, 0].to_numpy()
 
     n_anterior = n
     n = n - dia_anterior
@@ -83,8 +83,8 @@ def sequencial_press(raw, var_avg, var_max, var_min, var_std, var_avg_dia, limS,
     # ===================== PLOT da Variável ==================================
     flag = flag_plot(var_avg, resultado_press)
     
-    limSpress = round(limS)
-    limIpress = round(limI)
+    limSpress = int(round(limS))
+    limIpress = int(round(limI))
 
     if es == 'SPES01':
         limSpress = 960
@@ -100,10 +100,12 @@ def sequencial_press(raw, var_avg, var_max, var_min, var_std, var_avg_dia, limS,
             var_max[i] = 0
             var_min[i] = 0
 
-    #total_xplot3x(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, limSpress, limIpress, '[hPa]', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
-    #total_xplot3cx(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, limSpress, limIpress, '[hPa]', 10, 'P max', 'P min', 'P avg', nome_arquivo)
+    blox_plot_press = blox_plot(resultado_press, var_avg, nome_arquivo, nome_var, 10, '[hPa]', limIpress, limSpress, n)
+
+
+    total_xplot3x(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, limSpress, limIpress, '[hPa]', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
+    total_xplot3cx(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, limSpress, limIpress, '[hPa]', 10, 'P max', 'P min', 'P avg', nome_arquivo)
 
     # ======= Blox Plot =========
-    blox_plot_press = blox_plot(resultado_press, var_avg, nome_arquivo, nome_var, 10, '[hPa]', limIpress, limSpress, n)
     return 
     #return m1, n1, nome, press_xlsx, flags_press, estatistico_press, pot_press_xlsx, blox_plot_press

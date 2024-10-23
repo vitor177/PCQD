@@ -10,6 +10,8 @@ from sequencial_temp import sequencial_temp
 from sequencial_vel import sequencial_vel
 from sequencial_dire import sequencial_dire
 from sequencial_press import sequencial_press
+from sequencial_prec import sequencial_prec
+
 #from sequencial_prec import sequencial_prec
 
 from total_over_irradiance import total_over_irradiance
@@ -98,9 +100,8 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
         # Sequencial_PRESS
         pass
     if prec:
-        #sequencial_prec()
+        sequencial_prec(raw, prec_avg, prec_avg_dia, prec_max, 'Precipitation ', 'PR', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo)   
         # Sequencial_PREC
-
         pass
 
 
