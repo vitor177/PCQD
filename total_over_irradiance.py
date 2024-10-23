@@ -783,4 +783,4 @@ def total_over_irradiance(raw_rad, dados, ghi, clear_sky, dia_final, mes, ano, a
 
 
 
-    
+    return p

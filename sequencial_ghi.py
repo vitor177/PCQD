@@ -13,6 +13,9 @@ from testes.teste_persistencia import teste_persistencia
 from resultado_var import resultado_var
 from potencial_var import potencial_var
 from energia_var import energia_var
+from flag_plot import flag_plot
+from total_xplot3 import total_xplot3
+from total_xplot3c import total_xplot3c
 
 def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, titulo, nome_var, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo):
     n, m = raw.shape
@@ -157,13 +160,27 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
 # % ======= Calculo do Potêncial =========
 # [Pot_GHI1,Pot_GHI1_xlsx] = Potencial_Var(Resultado_GHI1,Var_avg,Var_max,Var_min,nome_var,horalocal,dia_mes,n);
-    #pot_ghi1, pot_ghi1xlsx = potencial_var(resultado_ghi1, var_avg, var_max, var_min, nome_var, horalocal, dia_mes, n)
+    pot_ghi1, pot_ghi1_xlsx = potencial_var(resultado_ghi1, var_avg, var_max, var_min, nome_var, horalocal, dia_mes, n)
 
     #print(pot_ghi1xlsx)
 
     # Cálculo da Energia
     # [Energia_GHI1,Energia_GHI1_xlsx] = Energia_Var(Resultado_GHI1,Var_avg,nome_var,n);
-    #energia_ghi1, energia_ghi1_xlsx = energia_var(resultado_ghi1, var_avg, nome_var, n)
+    energia_ghi1, energia_ghi1_xlsx = energia_var(resultado_ghi1, var_avg, nome_var, n)
+
+    flag = flag_plot(var_avg, resultado_ghi1)
+
+    for i in range(n):
+        if var_avg[i] > 2000:
+            var_avg[i] = 0
+            var_max[i] = 0
+            var_min[i] = 0
+
+    total_xplot3(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, 1000, 0, 'W/m²', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)    
+    total_xplot3c(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 1800, 0, 'W/m²', 10, 'GHI max', 'GHI min', 'GHI avg', nome_arquivo)
+
+
+    return m1, n1, nome, ghi1_xlsx, flags_ghi1, estatistico_ghi1, pot_ghi1_xlsx, energia_ghi1_xlsx
 
     #print(energia_ghi1)
     

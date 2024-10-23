@@ -182,7 +182,7 @@ def sequencial_bni(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
 
     total_xplot3c(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 1400, 0, 'W/m²', 10,'BNI max','BNI min', 'BNI avg', nome_arquivo)
-
+    return m1, n1, nome, bni_xlsx, flags_bni, estatistico_bni, pot_bni_xlsx, energia_bni_xlsx
         # total_xplot3c(variavel1=ghi_max,
         #         variavel2=ghi_min,
         #         variavel3=ghi_avg,

@@ -90,24 +90,24 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
 
     # is empty ghi2
     if not ghi2:
-        sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI ', 'GHI', nome_arquivo  )
+        ghi_m1, ghi_n1, ghi_nome, ghi_xlsx, flags_ghi, estatistico_ghi, pot_ghi_xlsx, energia_ghi_xlsx = sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance ', 'GHI', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        ghi_over = total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI ', 'GHI', nome_arquivo  )
     if ghi2:
-        sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance 1', 'GHI1', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        sequencial_ghi(raw_rad, dados, ghi2_avg, ghi2_max, ghi2_min, ghi2_std, ghi2_avg_p, 'Global Horizontal Irradiance 2', 'GHi2', ghi1, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 1', 'GHI1', nome_arquivo  )
-        total_over_irradiance(raw_rad, dados, ghi2, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 2', 'GHI2', nome_arquivo  )
+        ghi_m1, ghi_n1, ghi_nome, ghi_xlsx, flags_ghi, estatistico_ghi, pot_ghi_xlsx, energia_ghi_xlsx = sequencial_ghi(raw_rad, dados, ghi1_avg, ghi1_max, ghi1_min, ghi1_std, ghi1_avg_p, 'Global Horizontal Irradiance 1', 'GHI1', ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        ghi2_m1, ghi2_n1, ghi2_nome, ghi2_xlsx, flags_ghi2, estatistico_ghi2, pot_ghi2_xlsx, energia_ghi2_xlsx = sequencial_ghi(raw_rad, dados, ghi2_avg, ghi2_max, ghi2_min, ghi2_std, ghi2_avg_p, 'Global Horizontal Irradiance 2', 'GHi2', ghi1, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        ghi1_over = total_over_irradiance(raw_rad, dados, ghi1, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 1', 'GHI1', nome_arquivo  )
+        ghi2_over = total_over_irradiance(raw_rad, dados, ghi2, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 2', 'GHI2', nome_arquivo  )
     if ghi3:
-        sequencial_ghi(raw_rad, dados, ghi3_avg, ghi3_max, ghi3_min, ghi3_std, ghi3_avg_p, 'Global Horizontal 3', 'GHI3', ghi1, ghi2, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        total_over_irradiance(raw_rad, dados, ghi3, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 3 ', 'GHI3', nome_arquivo)
+        ghi3_m1, ghi3_n1, ghi3_nome, ghi3_xlsx, flags_ghi3, estatistico_ghi3, pot_ghi3_xlsx, energia_ghi3_xlsx = sequencial_ghi(raw_rad, dados, ghi3_avg, ghi3_max, ghi3_min, ghi3_std, ghi3_avg_p, 'Global Horizontal 3', 'GHI3', ghi1, ghi2, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        ghi3_over = total_over_irradiance(raw_rad, dados, ghi3, clear_sky, dia_final, mes, ano, 'Overirradiance Events - GHI 3 ', 'GHI3', nome_arquivo)
     if dhi:
-        sequencial_dhi(raw_rad, dados, dhi_avg, dhi_max, dhi_min, dhi_std, dhi_avg_p, 'Diffuse Horizontal Irradiance ', 'DHI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
-        sequencial_bni(raw_rad, dados, bni_avg, bni_max, bni_min, bni_std, bni_avg_p, 'Bean Normal Irradiance ', 'BNI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        dhi_m1, dhi_n1, dhi_nome, dhi_xlsx, flags_dhi, estatistico_dhi, pot_dhi_xlsx, energia_dhi_xlsx = sequencial_dhi(raw_rad, dados, dhi_avg, dhi_max, dhi_min, dhi_std, dhi_avg_p, 'Diffuse Horizontal Irradiance ', 'DHI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
+        bni_m1, bni_n1, bni_nome, bni_xlsx, flags_bni, estatistico_bni, pot_bni_xlsx, energia_bni_xlsx = sequencial_bni(raw_rad, dados, bni_avg, bni_max, bni_min, bni_std, bni_avg_p, 'Bean Normal Irradiance ', 'BNI', ghi1, ghi2, ghi3, poa, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo)
     if gri1 and not gri2:
-        sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  ','GRI', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
+        gri1_m1, gri1_n1, gri1_nome, gri1_xlsx, flags_gri1, estatistico_gri1, pot_gri1_xlsx, energia_gri1_xlsx = sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  ','GRI', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
     if gri2:
-        sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  1 ','GRI 1', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
-        sequencial_gri(raw_rad, dados, gri2_avg, gri2_max, gri2_min, gri2_std, gri2_avg, 'Global Horizontal Reflective  2 ','GRI 2', gri1, clear_sky, mes, dia_final, ano, nome_arquivo)
+        gri1_m1, gri1_n1, gri1_nome, gri1_xlsx, flags_gri1, estatistico_gri1, pot_gri1_xlsx, energia_gri1_xlsx = sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  1 ','GRI 1', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
+        gri2_m1, gri2_n1, gri2_nome, gri2_xlsx, flags_gri2, estatistico_gri2, pot_gri2_xlsx, energia_gri2_xlsx = sequencial_gri(raw_rad, dados, gri2_avg, gri2_max, gri2_min, gri2_std, gri2_avg, 'Global Horizontal Reflective  2 ','GRI 2', gri1, clear_sky, mes, dia_final, ano, nome_arquivo)
 
 
 

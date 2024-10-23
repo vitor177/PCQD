@@ -166,3 +166,4 @@ def sequencial_dhi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
 
     total_xplot3c(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 1000, 0, 'W/m²', 10,'DHI max','DHI min', 'DHI avg', nome_arquivo)
 
+    return m1, n1, nome, dhi_xlsx, flags_dhi, estatistico_dhi, pot_dhi_xlsx, energia_dhi_xlsx
