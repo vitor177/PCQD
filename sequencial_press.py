@@ -107,5 +107,4 @@ def sequencial_press(raw, var_avg, var_max, var_min, var_std, var_avg_dia, limS,
     total_xplot3cx(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, limSpress, limIpress, '[hPa]', 10, 'P max', 'P min', 'P avg', nome_arquivo)
 
     # ======= Blox Plot =========
-    return 
-    #return m1, n1, nome, press_xlsx, flags_press, estatistico_press, pot_press_xlsx, blox_plot_press
+    return m1, n1, nome, press_xlsx, flags_press, estatistico_press, pot_press_xlsx, blox_plot_press

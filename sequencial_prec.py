@@ -106,5 +106,4 @@ def sequencial_prec(raw, var_avg, var_avg_dia, prec_max, titulo, nome_var, mes, 
 
     # ======= Blox Plot =========
     #
-    return 
-    #return m1, n1, nome, press_xlsx, flags_press, estatistico_press, pot_press_xlsx, blox_plot_press
+    return m1, n1, nome, prec_xlsx, flags_prec, estatistico_prec, pot_prec_xlsx, blox_plot_prec

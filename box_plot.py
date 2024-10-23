@@ -26,15 +26,28 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     var_x[var_x > 1000] = 0
     var_y[var_y > 1000] = np.nan
 
-    # Calcular a média como float
-    mean_value = np.nanmean(var_y.astype(float))
+    # Calcular estatísticas
+    quartil_sup = np.nanquantile(var_y, 0.75)
+    max_var = np.nanmax(var_x)
+    mediana_var = np.nanmedian(var_y)
+    media_var = np.nanmean(var_y)
+    min_var = np.nanmin(var_y)
+    quartil_inf = np.nanquantile(var_y, 0.25)
+    std_var = np.nanstd(var_y)
+
+# Criando a matriz O
+    O = np.array([nome_var, quartil_sup, max_var, mediana_var, media_var, min_var, quartil_inf, std_var])
+
+# Corrigindo aqui para empilhar nome_var
+    #O = np.column_stack((np.array([nome_var]), O))  # Adiciona o nome da variável como uma nova linha
+
 
     #------------------------------------------------------
     #                      Plot Bloxplot com Seaborn
     #------------------------------------------------------
     sns.boxplot(data=var_y, whis=2.5, width=0.75)
 
-    plt.plot(1, mean_value, 'ko', markersize=10, markerfacecolor='k', label='Média')
+    plt.plot(1, media_var, 'ko', markersize=10, markerfacecolor='k', label='Média')
 
     # Configurando título e rótulos
     plt.title(nome_arquivo, fontsize=15)
@@ -43,19 +56,17 @@ def blox_plot(resultado, var, nome_arquivo, nome_var, num_figura, und, limiy, li
     plt.ylim([limiy, limsy])
     plt.grid(True)
 
-    # # Removendo valores do eixo X
+    # Removendo valores do eixo X
     plt.xticks([])
 
     # Exibindo valores mínimo, máximo e média no gráfico
     plt.text(1.1, np.nanmin(var_y), f'{np.nanmin(var_y):.2f}', fontsize=15, verticalalignment='bottom')
     plt.text(1.1, np.nanmax(var_y), f'{np.nanmax(var_y):.2f}', fontsize=15, verticalalignment='bottom')
-    plt.text(1.1, mean_value, f'{mean_value:.2f}', fontsize=15, verticalalignment='bottom')
+    plt.text(1.1, media_var, f'{media_var:.2f}', fontsize=15, verticalalignment='bottom')
 
-    #Salvando o gráfico
+    # Salvando o gráfico
     plt.savefig(f'{nome_arquivo}_bloxplot_{nome_var}.pdf', format='pdf')
     plt.savefig(f'{nome_arquivo}_bloxplot_{nome_var}.png', format='png')
 
-    #plt.close(num_figura)  # Fecha a figura atual para liberar memória
-    plt.clf()
-
-    return
+    plt.clf()  # Limpa a figura atual para liberar memória
+    return O   # Retorna a matriz O
