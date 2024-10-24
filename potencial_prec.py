@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import pandas as pd
 def potencial_prec(resultado, var_avg, nome_var, horalocal, dia_mes, n, nome_arquivo):
     # =========================== Criação das Flags ===========================
     flag6 = 60000
@@ -109,12 +109,15 @@ def potencial_prec(resultado, var_avg, nome_var, horalocal, dia_mes, n, nome_arq
         var_avg_med[i] = np.nanmean(var_avg_hora_x[:, i])
 
     m = np.zeros((24, 2))
+    #m[:, 0] = nome_var
     m[:, 0] = horax
     m[:, 1] = var_avg_med
 
+
     x = m
-    nome = [nome_var, ['Hora', 'Avg']]
-    xlsx = [nome] + m.tolist()
+
+    xlsx = pd.DataFrame(m, columns=['Hora', 'Avg'])
+    xlsx.insert(0, 'Nome', nome_var)
 
     # ======= Plot Prec - sum dia =======  
     dia_x = np.arange(1, max_dia + 1)
