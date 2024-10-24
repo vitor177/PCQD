@@ -106,4 +106,4 @@ def sequencial_prec(raw, var_avg, var_avg_dia, prec_max, titulo, nome_var, mes, 
 
     # ======= Blox Plot =========
     #
-    return m1, n1, nome, prec_xlsx, pd.DataFrame(flags_prec.T), pd.DataFrame(estatistico_prec), pot_prec_xlsx, blox_plot_prec
+    return m1, n1, nome, prec_xlsx, pd.DataFrame(flags_prec.T), pd.DataFrame(estatistico_prec), pot_prec_xlsx, pd.DataFrame(blox_plot_prec)

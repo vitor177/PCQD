@@ -108,19 +108,13 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
 
     estatistico_met = pd.concat([estatistico_nome, estatistico_temp, estatistico_ur, estatistico_vel], axis=1)
     met_xlsx = pd.concat([temp_xlsx, ur_xlsx.iloc[:, 1], vel_xlsx.iloc[:, 1]], axis=1)
+    met_xlsxplot = pd.DataFrame(np.vstack([nome_relatorio, met_xlsx]), columns=range(met_xlsx.shape[1]))
 
     aux = pd.DataFrame(np.nan, index=[0], columns=range(6))
     flags_met = pd.concat([flags_temp, aux, flags_ur, aux, flags_vel], axis=0)
     pot_met_xlsx = pd.concat([pot_temp_xlsx, pot_ur_xlsx, pot_vel_xlsx], axis=1)
 
-    blox_plot_temp_df = pd.DataFrame(blox_plot_temp)
-    blox_plot_ur_df = pd.DataFrame(blox_plot_ur)
-    blox_plot_vel_df = pd.DataFrame(blox_plot_vel)
-    blox_plot_dire = pd.DataFrame(blox_plot_dire)
-    blox_plot_press = pd.DataFrame(blox_plot_press)
-    blox_plot_prec = pd.DataFrame(blox_plot_prec)
-
-    blox_plot = pd.concat([bloxplot_nome, blox_plot_temp_df, blox_plot_ur_df, blox_plot_vel_df], axis=1)
+    blox_plot = pd.concat([bloxplot_nome, blox_plot_temp, blox_plot_ur, blox_plot_vel], axis=1)
 
     # Condição para DIR
     if len(dire) > 0: 

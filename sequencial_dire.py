@@ -104,5 +104,5 @@ def sequencial_dire(raw, var_avg, var_max, var_min, var_std, var_avg_dia, titulo
     # ======= Blox Plot =========
     blox_plot_dir = blox_plot(resultado_dir, var_avg, nome_arquivo, nome_var, 10, '[°]', 0, 360, n)
 
-    return m1, n1, nome, dir_xlsx, pd.DataFrame(flags_dir.T), pd.DataFrame(estatistico_dir), pot_dir_xlsx, blox_plot_dir
+    return m1, n1, nome, dir_xlsx, pd.DataFrame(flags_dir.T), pd.DataFrame(estatistico_dir), pot_dir_xlsx, pd.DataFrame(blox_plot_dir)
 #     return m1, n1, nome, ghi1_xlsx, pd.DataFrame(flags_ghi1.T), pd.DataFrame(estatistico_ghi1), pot_ghi1_xlsx, energia_ghi1_xlsx

@@ -115,5 +115,5 @@ def sequencial_temp(raw, var_avg, var_max, var_min, var_std, var_avg_dia, temp_f
     total_xplot3x(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, 45, 0, '[°C]', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
     total_xplot3cx(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 45, 0, '[°C]', 10, 'Temp max', 'Temp min', 'Temp avg', nome_arquivo)
 
-    return m1, n1, nome, temp_xlsx, pd.DataFrame(flags_temp.T), pd.DataFrame(estatistico_temp), pot_temp_xlsx, blox_plot_temp
+    return m1, n1, nome, temp_xlsx, pd.DataFrame(flags_temp.T), pd.DataFrame(estatistico_temp), pot_temp_xlsx, pd.DataFrame(blox_plot_temp)
 

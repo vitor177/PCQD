@@ -12,7 +12,8 @@ from total_varrad import total_varrad
 from total_cqd_met import total_cqd_met
 from resumo_cqd import resumo_cqd
 # Informações de entrada
-arquivo = 'data/RNES06-2024-06.xlsx'
+arquivo = 'data/SPES01-2024-09.xlsx'
+
 
 
 header = pd.read_excel(arquivo)
