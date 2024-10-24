@@ -6,4 +6,7 @@ def resumo_cqd(est_rad, est_met, rad_xlsxplot, met_xlsxplot, flags_rad, flags_me
  # pd.concat([pot_met_xlsx, pot_prec_xlsx], axis=1)
 
     aux = pd.concat([flags_rad, flags_met])  # Cria um array
-    pd.DataFrame(aux).to_excel(f"{nome_arquivo}_Relatorio.xlsx", index=False)
+    pd.DataFrame(aux).to_excel(f"{nome_arquivo}_Relatorio.xlsx", index=False, header=None)
+
+    aux = pd.concat([pot_rad_xlsx, pot_met_xlsx], axis=1)
+    pd.DataFrame(aux).to_excel(f"{nome_arquivo}_Potencial.xlsx", index=False)
