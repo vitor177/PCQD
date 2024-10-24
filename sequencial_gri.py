@@ -156,5 +156,6 @@ def sequencial_gri(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     total_xplot3(var_avg, flag[:, 1], flag[:, 2], data, 1, titulo, nome_var, dia_final, mes, ano, 1800*albedo_max, 0, 'W/m²', 10, 'b', [1, 0.75, 0.035], 'red', nome_arquivo)
 
     total_xplot3c(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 1800*albedo_max, 0, 'W/m²', 10,'BNI max','BNI min', 'BNI avg', nome_arquivo)
+    
 
-    return m1, n1, nome, gri_xlsx, flags_gri, estatistico_gri, pot_gri_xlsx, energia_gri_xlsx
+    return m1, n1.T, nome, gri_xlsx, pd.DataFrame(flags_gri.T), pd.DataFrame(estatistico_gri), pot_gri_xlsx, energia_gri_xlsx

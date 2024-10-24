@@ -4,6 +4,8 @@ from sequencial_ghi import sequencial_ghi
 from sequencial_dhi import sequencial_dhi
 from sequencial_bni import sequencial_bni
 from sequencial_gri import sequencial_gri
+from total_eplot import total_eplot
+from total_pplot import total_pplot
 from total_over_irradiance import total_over_irradiance
 def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es):
     data = raw_rad.iloc[:, 0].to_numpy()
@@ -109,6 +111,86 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
         gri1_m1, gri1_n1, gri1_nome, gri1_xlsx, flags_gri1, estatistico_gri1, pot_gri1_xlsx, energia_gri1_xlsx = sequencial_gri(raw_rad, dados, gri1_avg, gri1_max, gri1_min, gri1_std, gri1_avg, 'Global Horizontal Reflective  1 ','GRI 1', gri2, clear_sky, mes, dia_final, ano, nome_arquivo)
         gri2_m1, gri2_n1, gri2_nome, gri2_xlsx, flags_gri2, estatistico_gri2, pot_gri2_xlsx, energia_gri2_xlsx = sequencial_gri(raw_rad, dados, gri2_avg, gri2_max, gri2_min, gri2_std, gri2_avg, 'Global Horizontal Reflective  2 ','GRI 2', gri1, clear_sky, mes, dia_final, ano, nome_arquivo)
 
+    # Lista para armazenar os nomes das colunas
+    nome_relatorio = ['Data', 'GHI1']
+
+    estatistico_nome = pd.DataFrame({
+        'Month': [mes] * 5,
+        'Flag': ['Not available', 'Untested', 'Anomalous', 'Suspicious', 'Positive']
+    }).T
+    
+    # Estatístico GHI
+    estatistico_ghi = pd.concat([estatistico_nome, estatistico_ghi], axis=1)
+    energia_ghi1_xlsx = energia_ghi_xlsx
+    pot_ghi1_xlsx = pot_ghi_xlsx
+
+    # Condição para GHI2
+    if len(ghi2) > 0:
+        estatistico_ghi = pd.concat([estatistico_ghi, estatistico_ghi2], axis=1)
+        ghi_xlsx = pd.concat([ghi_xlsx, ghi2_xlsx.iloc[:, 1]], axis=1)
+        nome_relatorio.append('GHI2')
+        energia_ghi_xlsx = pd.concat([energia_ghi_xlsx, energia_ghi2_xlsx], axis=1)
+        pot_ghi_xlsx = pd.concat([pot_ghi_xlsx, pot_ghi2_xlsx], axis=1)
+        flags_ghi = pd.concat([flags_ghi, flags_ghi2], axis=0)
 
 
-    return 
+    # Condição para GHI3
+    if len(ghi3) > 0:
+        estatistico_ghi = pd.concat([estatistico_ghi, estatistico_ghi3], axis=1)
+        ghi_xlsx = pd.concat([ghi_xlsx, ghi3_xlsx.iloc[:, 1]], axis=1)
+        nome_relatorio.append('GHI3')
+        energia_ghi_xlsx = pd.concat([energia_ghi_xlsx, energia_ghi3_xlsx], axis=1)
+        pot_ghi_xlsx = pd.concat([pot_ghi_xlsx, pot_ghi3_xlsx], axis=1)
+        flags_ghi = pd.concat([flags_ghi, flags_ghi3], axis=0)
+
+    # Condição para DHI
+    if len(dhi) > 0:
+        estatistico_ghi = pd.concat([estatistico_ghi, estatistico_bni, estatistico_dhi], axis=1)
+        ghi_xlsx = pd.concat([ghi_xlsx, bni_xlsx.iloc[:, 1], dhi_xlsx.iloc[:, 1]], axis=1)
+        nome_relatorio.extend(['BNI', 'DHI'])
+        energia_ghi_xlsx = pd.concat([energia_ghi_xlsx, energia_bni_xlsx, energia_dhi_xlsx], axis=1)
+        pot_ghi_xlsx = pd.concat([pot_ghi_xlsx, pot_bni_xlsx, pot_dhi_xlsx], axis=1)
+
+
+        flags_ghi = pd.concat([flags_ghi, flags_bni, flags_dhi], axis=0)
+
+
+    # Condição para GRI1
+    if len(gri1) > 0:
+        estatistico_ghi = pd.concat([estatistico_ghi, estatistico_gri1], axis=1)
+        ghi_xlsx = pd.concat([ghi_xlsx, gri1_xlsx.iloc[:, 1]], axis=1)
+        nome_relatorio.append('GRI1')
+        energia_ghi_xlsx = pd.concat([energia_ghi_xlsx, energia_gri1_xlsx], axis=1)
+        pot_ghi_xlsx = pd.concat([pot_ghi_xlsx, pot_gri1_xlsx], axis=1)
+        flags_ghi = pd.concat([flags_ghi, flags_gri1], axis=0)
+
+    # Condição para GRI2
+    if len(gri2) > 0:
+        estatistico_ghi = pd.concat([estatistico_ghi, estatistico_gri2], axis=1)
+        ghi_xlsx = pd.concat([ghi_xlsx, gri2_xlsx.iloc[:, 1]], axis=1)
+        nome_relatorio.append('GRI2')
+        energia_ghi_xlsx = pd.concat([energia_ghi_xlsx, energia_gri2_xlsx], axis=1)
+        pot_ghi_xlsx = pd.concat([pot_ghi_xlsx, pot_gri2_xlsx], axis=1)
+        flags_ghi = pd.concat([flags_ghi, flags_gri2], axis=0)
+
+    # Salvando os dados como arquivos Excel
+    #energia_ghi_xlsx.columns = nome_relatorio  # Define os nomes das colunas com base na lista nome_relatorio
+    energia_ghi_xlsx.to_excel(f'{nome_arquivo}_Energia.xlsx', index=False)
+
+    ghi_xlsx.columns = nome_relatorio
+
+
+    #ghi_xlsx = pd.DataFrame(ghi_xlsx, columns=nome_relatorio)
+
+    print("VITAAAAAAAAAAO: ", pot_ghi_xlsx)
+
+    #flags_ghi.to_excel(f'{nome_arquivo}_VEJAI_VITAO.xlsx', index=False)
+    if len(ghi2) == 0 and len(ghi3) == 0:
+        total_eplot(energia_ghi1_xlsx, [], [], 2, 'Energy Fraction ', 'GHI', 'GHI 2', 'GHI 3', nome_arquivo)
+        total_pplot(pot_ghi_xlsx, [], [], 3, mes, nome_arquivo)
+    return estatistico_ghi, ghi_xlsx, flags_ghi, pot_ghi_xlsx, energia_ghi1_xlsx
+
+# 2, 4 e 5 CHECK
+
+
+# eplot, pplot, xplot2c, xplotdisx, xplot3c

@@ -180,7 +180,7 @@ def sequencial_ghi(raw, dados, var_avg, var_max, var_min, var_std, var_avg_p, ti
     total_xplot3c(var_max, var_min, var_avg, data, 2, titulo, dia_final, mes, ano, 1800, 0, 'W/m²', 10, 'GHI max', 'GHI min', 'GHI avg', nome_arquivo)
 
 
-    return m1, n1, nome, ghi1_xlsx, flags_ghi1, estatistico_ghi1, pot_ghi1_xlsx, energia_ghi1_xlsx
+    return m1, n1, nome, ghi1_xlsx, pd.DataFrame(flags_ghi1.T), pd.DataFrame(estatistico_ghi1), pot_ghi1_xlsx, energia_ghi1_xlsx
 
     #print(energia_ghi1)
     

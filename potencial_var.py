@@ -102,14 +102,15 @@ def potencial_var(resultado, var_avg, var_max, var_min, nome_var, horalocal, dia
     var_min_med = np.nanmean(var_min_hora.reshape(-1, 24), axis=0)
     
     # Construindo a matriz de resultado
-    M = np.zeros((24, 4))
+    M = np.zeros((24, 5))
     M[:, 0] = horax
     M[:, 1] = var_avg_med
     M[:, 2] = var_max_med
     M[:, 3] = var_min_med
+    M[:, 4] = np.nan
 
     # Convertendo para dataframe para facilitar a manipulação
-    M_df = pd.DataFrame(M, columns=['Hora', 'Avg', 'Max', 'Min'])
+    M_df = pd.DataFrame(M, columns=['Hora', 'Avg', 'Max', 'Min', ''])
     M_df.insert(0, 'Nome', nome_var)
 
     # Para exportar para Excel (caso necessário)

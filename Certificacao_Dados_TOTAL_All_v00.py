@@ -50,10 +50,10 @@ from total_cqd_rad import total_cqd_rad
 # [Estatistico_RAD,RAD_XLSXplot,Flags_RAD,Pot_RAD_xlsx,Energia_RAD_xlsx] = 
 # TOTAL_CQD_RAD(RAW_RAD,RAW_MET,DADOS,GHI1,GHI2,GHI3,POA,GRI1,GRI2,DHI,BNI,Clear_sky,mes,dia_final,ano,Nome_Arquivo,ES);
 #estatistico_rad, rad_xlsxplot, flags = total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es)
-total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es)
+estatistico_rad, rad_xlsxplot, flags_rad, pot_rad_xlsx, energia_rad_xlsx = total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es)
 
 # %%
 estatistico_met, met_xlsxplot, flags_met, pot_met_xlsx, blox_plot = total_cqd_met(raw_met, dados, temp, ur, press, prec, vel, dire, temp_max, temp_min, press_max, press_min, mes, dia_final, ano, 10, prec_max, nome_arquivo, es)
 # %%
 #resumo_cqd()
-excluir_arquivos()
+#excluir_arquivos()
