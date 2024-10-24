@@ -10,6 +10,7 @@ from total_localizador import total_localizador
 from total_varrad import total_varrad
 #from resumo_cqd import resumo_cqd
 from total_cqd_met import total_cqd_met
+from resumo_cqd import resumo_cqd
 # Informações de entrada
 arquivo = 'data/SPES01-2024-09.xlsx'
 
@@ -55,5 +56,5 @@ estatistico_rad, rad_xlsxplot, flags_rad, pot_rad_xlsx, energia_rad_xlsx = total
 # %%
 estatistico_met, met_xlsxplot, flags_met, pot_met_xlsx, blox_plot = total_cqd_met(raw_met, dados, temp, ur, press, prec, vel, dire, temp_max, temp_min, press_max, press_min, mes, dia_final, ano, 10, prec_max, nome_arquivo, es)
 # %%
-#resumo_cqd()
+resumo_cqd(estatistico_rad, estatistico_met, rad_xlsxplot, met_xlsxplot, flags_rad, flags_met, pot_rad_xlsx, pot_met_xlsx, nome_arquivo)
 #excluir_arquivos()

@@ -105,4 +105,4 @@ def sequencial_vel(raw, var_avg, var_max, var_min, var_std, var_avg_dia, titulo,
     # ======= Blox Plot =========
     blox_plot_vel = blox_plot(resultado_vel, var_avg, nome_arquivo, nome_var, 10, '[m/s]', 0, 25, n)
 
-    return m1, n1, nome, vel_xlsx, flags_vel, estatistico_vel, pot_vel_xlsx, blox_plot_vel
+    return m1, n1, nome, vel_xlsx, pd.DataFrame(flags_vel.T), pd.DataFrame(estatistico_vel), pot_vel_xlsx, blox_plot_vel

@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from sequencial_ghi import sequencial_ghi
@@ -6,7 +7,11 @@ from sequencial_bni import sequencial_bni
 from sequencial_gri import sequencial_gri
 from total_eplot import total_eplot
 from total_pplot import total_pplot
+from total_xplot3c import total_xplot3c
 from total_over_irradiance import total_over_irradiance
+#from total_xplotdisx import total_xplot_disx
+from total_xplot2c import total_xplot2c
+from total_xplotdisx import total_xplotdisx
 def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dhi, bni, clear_sky, mes, dia_final, ano, nome_arquivo, es):
     data = raw_rad.iloc[:, 0].to_numpy()
 
@@ -180,15 +185,64 @@ def total_cqd_rad(raw_rad, raw_met, dados, ghi1, ghi2, ghi3, poa, gri1, gri2, dh
     ghi_xlsx.columns = nome_relatorio
 
 
-    #ghi_xlsx = pd.DataFrame(ghi_xlsx, columns=nome_relatorio)
-
-    print("VITAAAAAAAAAAO: ", pot_ghi_xlsx)
-
     #flags_ghi.to_excel(f'{nome_arquivo}_VEJAI_VITAO.xlsx', index=False)
     if len(ghi2) == 0 and len(ghi3) == 0:
         total_eplot(energia_ghi1_xlsx, [], [], 2, 'Energy Fraction ', 'GHI', 'GHI 2', 'GHI 3', nome_arquivo)
         total_pplot(pot_ghi_xlsx, [], [], 3, mes, nome_arquivo)
+
+    if len(ghi2) > 0 and len(ghi3) == 0:
+        for i in range(n):
+            if ghi1_avg[i] > 2000:
+                ghi1_avg[i] = 0
+            if ghi2_avg[i] > 2000:
+                ghi2_avg[i] = 0
+        total_xplot2c(ghi1_avg, ghi2_avg, data, 1, 'Comparison of Measured GHI Values ', dia_final, mes, ano, 1800, 0, 'W/m²', 10, 'GHI1 avg', 'GHI2 avg', nome_arquivo)
+        vazio = []
+        total_eplot(energia_ghi1_xlsx, energia_ghi2_xlsx, vazio, 2, 'Energy Fraction of Variables ', 'GHI 1','GHI 2 ','GHI 3', nome_arquivo)
+        total_pplot(pot_ghi1_xlsx, pot_ghi2_xlsx, vazio, 3, mes, nome_arquivo)
+        total_xplotdisx(ghi1_avg, ghi2_avg, 'GHI 1', 'GHI 2', 'W/m²', 4, 1500, nome_arquivo)
+
+    
+    if len(ghi3) > 0:  # Verifica se gh3 não está vazio
+        for i in range(n):
+            if ghi1_avg[i] > 2000:
+                ghi1_avg[i] = 0
+            if ghi2_avg[i] > 2000:
+                ghi2_avg[i] = 0
+            if ghi3_avg[i] > 2000:
+                ghi3_avg[i] = 0
+                
+        plt.close('all')
+
+        # Chama as funções para gerar gráficos
+        total_xplot3c(ghi1_avg, ghi2_avg, ghi3_avg, data, 1, 'Comparison of Measured GHI Values ', dia_final, mes, ano, 1800, 0, 'W/m²', 10, 'GHI1 avg', 'GHI2 avg', 'GHI3 avg', nome_arquivo)
+        total_eplot(energia_ghi1_xlsx, energia_ghi2_xlsx, energia_ghi3_xlsx, 2, 'Energy Fraction of Variables ', 'GHI 1', 'GHI 2', 'GHI 3', nome_arquivo)
+        total_pplot(pot_ghi1_xlsx, pot_ghi2_xlsx, pot_ghi3_xlsx, 3, mes, nome_arquivo)    
+        total_xplotdisx(ghi1_avg, ghi2_avg, 'GHI 1', 'GHI 2', 'W/m²', 4, 1500, nome_arquivo)
+        total_xplotdisx(ghi1_avg, ghi3_avg, 'GHI 1', 'GHI 3', 'W/m²', 5, 1500, nome_arquivo)
+        total_xplotdisx(ghi2_avg, ghi3_avg, 'GHI 2', 'GHI 3', 'W/m²', 6, 1500, nome_arquivo)
+
+    if len(dhi) > 0:  # Verifica se dhi não está vazio
+        for i in range(n):
+            if cosAZS[i] < 0:
+                cosAZS[i] = 0
+
+        bhi_avg = bni_avg * cosAZS  # Calcula bhi_avg
+        for i in range(n):
+            if ghi1_avg[i] > 2000:
+                ghi1_avg[i] = 0
+            if bni_avg[i] > 1500:
+                bni_avg[i] = 0
+            if dhi_avg[i] > 1500:
+                dhi_avg[i] = 0
+
+        plt.close('all')
+        
+        # Chama a função para gerar gráficos de comparação
+        total_xplot3c(ghi1_avg, bni_avg, dhi_avg, data, 1, 'Comparison between radiometric variables ', dia_final, mes, ano, 1400, 0, 'W/m²', 10, 'GHI avg', 'BNI avg', 'DHI avg', nome_arquivo)
+
     return estatistico_ghi, ghi_xlsx, flags_ghi, pot_ghi_xlsx, energia_ghi1_xlsx
+
 
 # 2, 4 e 5 CHECK
 

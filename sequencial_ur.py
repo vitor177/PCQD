@@ -87,4 +87,5 @@ def sequencial_ur(raw, var_avg, var_max, var_min, var_std, var_avg_dia, titulo, 
     # ======= Blox Plot =========
     blox_plot_ur = blox_plot(resultado_ur, var_avg, nome_arquivo, nome_var, 10, '[%]', 0, 100, n)
 
-    return m1, n1, nome, ur_xlsx, flags_ur, estatistico_ur, pot_ur_xlsx, blox_plot_ur
+    return m1, n1, nome, ur_xlsx, pd.DataFrame(flags_ur.T), pd.DataFrame(estatistico_ur), pot_ur_xlsx, blox_plot_ur
+#     return m1, n1, nome, ghi1_xlsx, pd.DataFrame(flags_ghi1.T), pd.DataFrame(estatistico_ghi1), pot_ghi1_xlsx, energia_ghi1_xlsx

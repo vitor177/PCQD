@@ -98,27 +98,6 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
         prec_m1, prec_n1, prec_nome, prec_xlsx, flags_prec, estatistico_prec, pot_prec_xlsx, blox_plot_prec = sequencial_prec(raw, prec_avg, prec_avg_dia, prec_max, 'Precipitation ', 'PR', mes, dia_final, ano, horalocal, dia_mes, nome_arquivo)   
         # Sequencial_PREC
 
-    estatistico_temp = pd.DataFrame(estatistico_temp)  
-    estatistico_ur = pd.DataFrame(estatistico_ur)      
-    estatistico_vel = pd.DataFrame(estatistico_vel)  
-    estatistico_dire = pd.DataFrame(estatistico_dire)
-    estatistico_press = pd.DataFrame(estatistico_press)
-    estatistico_prec = pd.DataFrame(estatistico_prec)  
-
-    # Condição para os flags
-    if isinstance(flags_temp, np.ndarray):
-        flags_temp = pd.DataFrame(flags_temp)
-    if isinstance(flags_ur, np.ndarray):
-        flags_ur = pd.DataFrame(flags_ur)
-    if isinstance(flags_vel, np.ndarray):
-        flags_vel = pd.DataFrame(flags_vel)
-    if isinstance(flags_dire, np.ndarray):
-        flags_dire = pd.DataFrame(flags_dire)
-    if isinstance(flags_press, np.ndarray):
-        flags_press = pd.DataFrame(flags_press)
-    if isinstance(flags_prec, np.ndarray):
-        flags_prec = pd.DataFrame(flags_prec)
-
     nome_relatorio = ['Data', 'TEMP', 'UR', 'VEL']
     estatistico_nome = pd.DataFrame({
         'Month': [mes] * 5,
@@ -143,16 +122,13 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
 
     blox_plot = pd.concat([bloxplot_nome, blox_plot_temp_df, blox_plot_ur_df, blox_plot_vel_df], axis=1)
 
-
-
     # Condição para DIR
     if len(dire) > 0: 
         estatistico_met = pd.concat([estatistico_met, estatistico_dire], axis=1)
         met_xlsx = pd.concat([met_xlsx, dire_xlsx.iloc[:, 1]], axis=1)
         nome_relatorio.append('DIR')
         met_xlsxplot = pd.DataFrame(np.vstack([nome_relatorio, met_xlsx]), columns=range(met_xlsx.shape[1]))
-        aux = pd.DataFrame(np.nan, index=[0], columns=range(6))
-        flags_met = pd.concat([flags_met, aux, flags_dire], axis=0)
+        flags_met = pd.concat([flags_met, flags_dire], axis=0)
         pot_met_xlsx = pd.concat([pot_met_xlsx, pot_dire_xlsx], axis=1)
         blox_plot = pd.concat([blox_plot, blox_plot_dire], axis=1)
 
@@ -162,8 +138,7 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
         met_xlsx = pd.concat([met_xlsx, press_xlsx.iloc[:, 1]], axis=1)
         nome_relatorio.append('PRESS')
         met_xlsxplot = pd.DataFrame(np.vstack([nome_relatorio, met_xlsx]), columns=range(met_xlsx.shape[1]))
-        aux = pd.DataFrame(np.nan, index=[0], columns=range(6))
-        flags_met = pd.concat([flags_met, aux, flags_press], axis=0)
+        flags_met = pd.concat([flags_met, flags_press], axis=0)
         pot_met_xlsx = pd.concat([pot_met_xlsx, pot_press_xlsx], axis=1)
         blox_plot = pd.concat([blox_plot, blox_plot_press], axis=1)
 
@@ -173,8 +148,7 @@ def total_cqd_met(raw, dados, temp, ur, press, prec, vel, dire, temp_fp_max, tem
         met_xlsx = pd.concat([met_xlsx, prec_xlsx.iloc[:, 1]], axis=1)
         nome_relatorio.append('PREC')
         met_xlsxplot = pd.DataFrame(np.vstack([nome_relatorio, met_xlsx]), columns=range(met_xlsx.shape[1]))
-        aux = pd.DataFrame(np.nan, index=[0], columns=range(6))
-        flags_met = pd.concat([flags_met, aux, flags_prec], axis=0)
+        flags_met = pd.concat([flags_met, flags_prec], axis=0)
         pot_prec_xlsx = pd.DataFrame(pot_prec_xlsx)
         pot_met_xlsx = pd.concat([pot_met_xlsx, pot_prec_xlsx], axis=1)
         blox_plot = pd.concat([blox_plot, blox_plot_prec], axis=1)
